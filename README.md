@@ -69,6 +69,32 @@ This project combines three separate machine‑learning models (blood pressure, 
 </table>
 
 
+# Blood Pressure Analysis  page 
+
+<table>
+  <tr>
+    <td width="50%">
+      <img width="100%" alt="image" src="https://github.com/user-attachments/assets/aac41d5e-455b-4b97-a74e-678ed5ccb1ec" />
+    </td>
+    <td width="50%">
+      <img width="100%" alt="image" src="https://github.com/user-attachments/assets/d2675039-2606-426b-99d9-a7f1d2458ef5" />
+    </td>
+  </tr>
+</table>
+
+# Blood Pressure Analysis Results page 
+<table>
+  <tr>
+    <td width="50%">
+      <img width="100%" alt="image" src="https://github.com/user-attachments/assets/534df5d3-4942-4466-86d2-02ad202d837e" />
+    </td>
+    <td width="50%">
+      <img width="100%" alt="image" src="https://github.com/user-attachments/assets/63371186-5e55-4d2b-8515-aca118761ae8"/>
+    </td>
+  </tr>
+</table>
+
+
 ## How to run the project
 
 ### 1. Set up the Python environment (first time only)
