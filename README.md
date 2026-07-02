@@ -20,7 +20,7 @@ This project combines three separate machine‑learning models (blood pressure, 
 <table>
   <tr>
     <td width="50%">
-      <img width="100%" alt="image" rc="https://github.com/user-attachments/assets/b55155c9-6c52-4f9b-90fa-f3074ae8dc74" />
+      <img width="100%" alt="image" src="https://github.com/user-attachments/assets/aa1f8e3a-9f94-4cda-abac-cfa43711ff08"/>
     </td>
     <td width="50%">
       <img width="100%" alt="image" src="https://github.com/user-attachments/assets/7a58db26-39c2-499b-8064-8c43b4611046" />
@@ -30,7 +30,7 @@ This project combines three separate machine‑learning models (blood pressure, 
 <table>
   <tr>
     <td width="50%">
-      <img width="100%" alt="image" rc="https://github.com/user-attachments/assets/df5c8f21-a53d-4edd-9521-694aa5701adf />
+      <img width="100%" alt="image" src="https://github.com/user-attachments/assets/df5c8f21-a53d-4edd-9521-694aa5701adf />
     </td>
     <td width="50%">
       <img width="100%" alt="image" src="https://github.com/user-attachments/assets/f80af908-ec41-4a0e-adff-0845538c89de" />
@@ -42,7 +42,7 @@ This project combines three separate machine‑learning models (blood pressure, 
 <table>
   <tr>
     <td width="50%">
-      <img width="100%" alt="image" rc="https://github.com/user-attachments/assets/5610552e-c957-4da9-ac3c-7a840e408647" />
+      <img width="100%" alt="image" src="https://github.com/user-attachments/assets/5610552e-c957-4da9-ac3c-7a840e408647" />
     </td>
     <td width="50%">
       <img width="100%" alt="image" src="src="https://github.com/user-attachments/assets/28e5aaec-eb3b-474b-b049-a2f6e16cb6dc" />
