@@ -56,7 +56,7 @@ This project combines three separate machine‑learning models (blood pressure, 
   </tr>
 </table>
 
-# Mental health Analysis Results page 
+# Mental health Analysis Results page [safe and risk]
 <table>
   <tr>
     <td width="50%">
@@ -82,7 +82,7 @@ This project combines three separate machine‑learning models (blood pressure, 
   </tr>
 </table>
 
-# Blood Pressure Analysis Results page 
+# Blood Pressure Analysis Results page [Safe and Risk]
 <table>
   <tr>
     <td width="50%">
@@ -94,6 +94,31 @@ This project combines three separate machine‑learning models (blood pressure, 
   </tr>
 </table>
 
+# Entire  Analysis Home page 
+
+<table>
+  <tr>
+    <td width="50%">
+      <img width="100%" alt="image"  src="https://github.com/user-attachments/assets/81bb445f-e10e-465a-bd12-9304798b423a"/>
+    </td>
+    <td width="50%">
+      <img width="100%" alt="image" src="https://github.com/user-attachments/assets/1d816f1d-41b2-4ca0-a595-5d04f204f309"/>
+    </td>
+  </tr>
+</table>
+
+# Entire  Analysis Results page [Safe and Risk]
+
+<table>
+  <tr>
+    <td width="50%">
+      <img width="100%" alt="image"  src="https://github.com/user-attachments/assets/02fa3ec7-9ccf-4bac-a2ae-d3d0eb1d3b13"/>
+    </td>
+    <td width="50%">
+      <img width="100%" alt="image" src="https://github.com/user-attachments/assets/41def6ed-4ab3-49b9-8526-b5e70da5dac0"/>
+    </td>
+  </tr>
+</table>
 
 ## How to run the project
 
