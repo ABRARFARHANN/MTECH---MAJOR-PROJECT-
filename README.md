@@ -9,7 +9,7 @@ This project combines three separate machine‑learning models (blood pressure, 
 From the project root:
 
 ```bash
-cd "/Users/abrarfarhann/CODING/main project sub "
+
 
 # (Optional, but recommended) create a virtual environment
 python3 -m venv .venv
@@ -24,7 +24,7 @@ pip install flask joblib pandas scikit-learn
 Every time you want to run the app:
 
 ```bash
-cd "/Users/abrarfarhann/CODING/main project sub "
+
 source .venv/bin/activate
 
 # Start the Flask API server
