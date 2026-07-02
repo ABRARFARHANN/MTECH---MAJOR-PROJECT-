@@ -30,7 +30,7 @@ This project combines three separate machine‑learning models (blood pressure, 
 
 <img width="932" height="777" alt="image" src="https://github.com/user-attachments/assets/22be4c45-9bab-472b-8bba-3294b9351519" />
 
-# Mental health Analysis page Results 
+# Mental health Analysis page Results [safe & high risk results]
 
 <table>
   <tr>
@@ -43,6 +43,31 @@ This project combines three separate machine‑learning models (blood pressure, 
   </tr>
 </table>
 
+# Mental health Analysis page
+
+
+<table>
+  <tr>
+    <td width="50%">
+      <img width="100%" alt="image" src="https://github.com/user-attachments/assets/53db53ec-b1f5-4e8c-a142-aa3750c76c91"/>
+    </td>
+    <td width="50%">
+      <img width="100%" alt="image" src="https://github.com/user-attachments/assets/9f8f765c-cca4-4408-a11f-a577b853444b" />
+    </td>
+  </tr>
+</table>
+
+# Mental health Analysis Results page 
+
+  <tr>
+    <td width="50%">
+      <img width="100%" alt="image" src="https://github.com/user-attachments/assets/e3795b79-fa01-4bb8-9ad0-59ca996bec38" />
+    </td>
+    <td width="50%">
+      <img width="100%" alt="image" src="https://github.com/user-attachments/assets/eddae4c2-b693-42e8-b726-b53d3f45a875" />
+    </td>
+  </tr>
+</table>
 
 
 ## How to run the project
