@@ -45,7 +45,6 @@ This project combines three separate machine‑learning models (blood pressure, 
 
 # Mental health Analysis page
 
-
 <table>
   <tr>
     <td width="50%">
@@ -58,7 +57,7 @@ This project combines three separate machine‑learning models (blood pressure, 
 </table>
 
 # Mental health Analysis Results page 
-
+<table>
   <tr>
     <td width="50%">
       <img width="100%" alt="image" src="https://github.com/user-attachments/assets/e3795b79-fa01-4bb8-9ad0-59ca996bec38" />
