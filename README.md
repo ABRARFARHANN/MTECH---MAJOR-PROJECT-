@@ -1,6 +1,7 @@
 # Carelytics – Health Risk Explorer
 
 This project combines three separate machine‑learning models (blood pressure, diabetes, and daily mental health) into a unified, web‑based risk explorer.
+<img width="1340" height="835" alt="image" src="https://github.com/user-attachments/assets/70c461a0-b8bc-4803-a084-25616aa29613" />
 
 ## How to run the project
 
