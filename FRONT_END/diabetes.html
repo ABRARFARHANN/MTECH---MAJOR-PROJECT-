@@ -1,0 +1,1108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carelytics | Diabetes Analysis</title>
+    <link rel="stylesheet" href="styles_theme2.css" />
+    <style>
+      .analysis-page {
+        padding-top: 5rem;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #ecfdf5, #eef2ff);
+      }
+
+      .analysis-layout {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 4rem;
+      }
+
+      .analysis-title-block {
+        margin-bottom: 1.8rem;
+        text-align: center;
+      }
+
+      .analysis-title-block h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-transform: none;
+        margin-bottom: 0.5rem;
+      }
+
+      .analysis-title-subtitle {
+        font-size: 1rem;
+        color: #6b7280;
+      }
+
+      .analysis-intro-block {
+        max-width: 880px;
+        margin: 0 auto 2.3rem;
+        text-align: left;
+      }
+
+      .mh-intro-card {
+        border-radius: 18px;
+        padding: 1.4rem 1.75rem 1.6rem;
+        background: #ffffff;
+        border: 1px solid rgba(209, 213, 219, 0.85);
+        box-shadow: 0 16px 40px rgba(148, 163, 184, 0.32);
+      }
+
+      .mh-intro-eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 0.72rem;
+        color: #0f766e;
+        margin-bottom: 0.7rem;
+      }
+
+      .mh-intro-title {
+        font-size: 1.6rem;
+        margin: 0 0 0.8rem;
+      }
+
+      .mh-intro-body {
+        border-left: 3px solid #0f766e;
+        padding-left: 1.25rem;
+        margin-top: 0.4rem;
+      }
+
+      .mh-intro-body p,
+      .mh-intro-body li {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #374151;
+      }
+
+      .mh-intro-body ul {
+        margin: 0.9rem 0 0.6rem;
+        padding-left: 1.1rem;
+      }
+
+      .mh-intro-note {
+        font-size: 0.82rem;
+        color: #6b7280;
+        margin-top: 0.9rem;
+        font-style: italic;
+        background: #f9fafb;
+        padding: 0.55rem 0.95rem;
+        border-radius: 999px;
+      }
+
+      .analysis-input-heading {
+        margin-top: 1.75rem;
+        margin-bottom: 0.6rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: center;
+      }
+
+      .analysis-input-heading h2 {
+        margin: 0 0 0.35rem;
+        font-size: 1.25rem;
+        font-weight: 650;
+        color: #0f172a;
+      }
+
+      .analysis-input-heading p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #4b5563;
+      }
+
+      .inputs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.2rem 1.4rem;
+        margin-bottom: 2rem;
+      }
+
+      .input-card {
+        border: 1px solid #d1d5db;
+        border-radius: 0.75rem;
+        background: #ffffff;
+        padding: 1.2rem 1.4rem;
+        min-height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition:
+          box-shadow 0.15s ease,
+          transform 0.15s ease,
+          border-color 0.15s ease,
+          background-color 0.15s ease;
+      }
+
+      .input-card-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.35rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .input-card small {
+        font-size: 0.8rem;
+        color: #6b7280;
+      }
+
+      .input-card select,
+      .input-card input {
+        margin-top: 0.65rem;
+        padding: 0.5rem 0.6rem;
+        border-radius: 0.5rem;
+        border: 1px solid #d1d5db;
+        font-size: 0.85rem;
+        width: 100%;
+      }
+
+      .input-card:hover {
+        border-color: #0f766e;
+        box-shadow: 0 18px 45px rgba(148, 163, 184, 0.55);
+        transform: translateY(-4px);
+        background: radial-gradient(circle at top left, #ffffff, #e0f2fe 65%);
+      }
+
+      .analysis-result-heading {
+        text-align: center;
+        margin-top: 0.5rem;
+        background: linear-gradient(90deg, #059669, #10b981);
+        color: #f9fafb;
+        border: 1px solid #047857;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 0.9rem;
+        padding: 1.4rem 1.6rem;
+        margin-bottom: 1.5rem;
+        transition:
+          transform 0.1s ease,
+          box-shadow 0.1s ease,
+          background 0.15s ease;
+      }
+
+      .analysis-result-heading h2 {
+        margin: 0;
+        font-size: 1.05rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .analysis-result-heading:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 25px rgba(4, 120, 87, 0.25);
+        background: linear-gradient(90deg, #10b981, #22c55e);
+      }
+
+      .results-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 2fr);
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .result-panel {
+        border: 1px solid #d1d5db;
+        border-radius: 0.75rem;
+        background: #ffffff;
+        padding: 1.6rem 1.8rem;
+        min-height: 200px;
+      }
+
+      .result-panel h3 {
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .result-placeholder {
+        font-size: 0.85rem;
+        color: #6b7280;
+      }
+
+      .diab-extra {
+        font-size: 0.9rem;
+        color: #4b5563;
+        margin-top: 0.7rem;
+      }
+
+      .diab-disclaimer {
+        font-size: 0.78rem;
+        color: #9ca3af;
+        margin-top: 0.6rem;
+      }
+
+      /* Diabetes feature impact styling */
+      .diab-impact-note {
+        font-size: 0.82rem;
+        color: #6b7280;
+        margin-bottom: 0.9rem;
+      }
+
+      .diab-impact-bars {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .diab-impact-row {
+        display: grid;
+        grid-template-columns: 110px minmax(0, 1fr) 32px;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        padding: 0.1rem 0.3rem;
+        border-radius: 0.6rem;
+        transition:
+          transform 0.15s ease,
+          background-color 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      .diab-impact-row:hover {
+        transform: scale(1.02);
+        background-color: #f9fafb;
+        box-shadow: 0 6px 16px rgba(148, 163, 184, 0.35);
+      }
+
+      .diab-impact-label {
+        font-weight: 500;
+        color: #374151;
+      }
+
+      .diab-impact-bar-bg {
+        position: relative;
+        height: 0.6rem;
+        border-radius: 999px;
+        background: #e5e7eb;
+        overflow: hidden;
+        transition: height 0.15s ease;
+      }
+
+      .diab-impact-row:hover .diab-impact-bar-bg {
+        height: 0.8rem;
+      }
+
+      .diab-impact-bar-fill {
+        position: absolute;
+        inset: 0;
+        border-radius: 999px;
+        width: 0%;
+        transition: width 0.4s ease;
+      }
+
+      .diab-impact-bar-fill.score-1 {
+        background: #22c55e;
+      }
+
+      .diab-impact-bar-fill.score-2 {
+        background: linear-gradient(90deg, #22c55e, #eab308);
+      }
+
+      .diab-impact-bar-fill.score-3 {
+        background: #eab308;
+      }
+
+      .diab-impact-bar-fill.score-4 {
+        background: linear-gradient(90deg, #eab308, #ef4444);
+      }
+
+      .diab-impact-bar-fill.score-5 {
+        background: #ef4444;
+      }
+
+      .diab-impact-score {
+        font-weight: 600;
+        color: #111827;
+        text-align: right;
+      }
+
+      #diab-impact-panel {
+        transition:
+          transform 0.18s ease,
+          box-shadow 0.18s ease,
+          border-color 0.18s ease,
+          background-color 0.18s ease;
+      }
+
+      #diab-impact-panel:hover {
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 18px 45px rgba(148, 163, 184, 0.45);
+        border-color: #c4b5fd;
+        background-color: #f9fafb;
+      }
+
+      /* Feature impact card risk colouring (aligned with result card) */
+      #diab-impact-panel.risk-low {
+        background: #ecfdf5;
+        border-color: #16a34a;
+      }
+
+      #diab-impact-panel.risk-moderate {
+        background: #fefce8;
+        border-color: #eab308;
+      }
+
+      #diab-impact-panel.risk-high {
+        background: #fef2f2;
+        border-color: #ef4444;
+      }
+
+      /* Result risk colouring for diabetes */
+      #diab-result-panel {
+        font-size: 1rem;
+      }
+
+      #diab-result {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        font-weight: 550;
+      }
+
+      #diab-result-panel.risk-low {
+        background: #ecfdf5;
+        border-color: #16a34a;
+        color: #14532d;
+      }
+
+      #diab-result-panel.risk-low #diab-result {
+        color: #14532d;
+      }
+
+      #diab-result-panel.risk-moderate {
+        background: #fefce8;
+        border-color: #eab308;
+        color: #78350f;
+      }
+
+      #diab-result-panel.risk-moderate #diab-result {
+        color: #78350f;
+      }
+
+      #diab-result-panel.risk-high {
+        background: #fef2f2;
+        border-color: #ef4444;
+        color: #7f1d1d;
+      }
+
+      #diab-result-panel.risk-high #diab-result {
+        color: #7f1d1d;
+      }
+
+      @media (max-width: 768px) {
+        .analysis-layout {
+          padding-inline: 1.25rem;
+        }
+
+        .results-grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="nav">
+      <div class="nav-inner">
+        <div class="logo">Carelytics</div>
+        <nav class="nav-links">
+          <a href="index.html#home">Home</a>
+          <a href="index.html#about">About</a>
+          <a href="index.html#analysis">Back to Analysis</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="analysis-page">
+      <section class="analysis-layout">
+        <div class="analysis-title-block">
+          <h1>Diabetes risk analysis</h1>
+          <p class="analysis-title-subtitle">
+            Explore estimated diabetes risk based on your clinical indicators.
+          </p>
+        </div>
+
+        <div class="analysis-intro-block">
+          <div class="mh-intro-card">
+            <p class="mh-intro-eyebrow">Diabetes model</p>
+            <h2 class="mh-intro-title">How this model uses your data</h2>
+            <div class="mh-intro-body">
+              <p>
+                This diabetes model uses standard clinical measurements to
+                estimate an overall diabetes risk level based on today's values.
+              </p>
+              <ul>
+                <li>Metabolic indicators such as fasting glucose and BMI.</li>
+                <li>
+                  Physiological measures including blood pressure and skin
+                  thickness.
+                </li>
+                <li>
+                  Longer-term risk factors: insulin, age, and diabetes pedigree.
+                </li>
+              </ul>
+              <p class="mh-intro-note">
+                Designed for learning and exploration &mdash; not for diagnosis
+                or medical decision making.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="analysis-input-heading">
+          <h2>Provide today's data</h2>
+          <p>Fill in the fields below using information from the same day.</p>
+        </div>
+
+        <div class="inputs-grid">
+          <div class="input-card" id="diab-pregnancies-card">
+            <div>
+              <div class="input-card-title">Pregnancies</div>
+              <small>Number of pregnancies (0–20)</small>
+            </div>
+            <input
+              id="diab-pregnancies"
+              type="number"
+              min="0"
+              max="20"
+              step="1"
+              value="0"
+            />
+            <div class="field-error" id="diab-pregnancies-error"></div>
+          </div>
+
+          <div class="input-card" id="diab-glucose-card">
+            <div>
+              <div class="input-card-title">Glucose</div>
+              <small>Plasma glucose (mg/dL, 40–300)</small>
+            </div>
+            <input
+              id="diab-glucose"
+              type="number"
+              min="40"
+              max="300"
+              step="1"
+              value="120"
+            />
+            <div class="field-error" id="diab-glucose-error"></div>
+          </div>
+
+          <div class="input-card" id="diab-bp-card">
+            <div>
+              <div class="input-card-title">Blood Pressure</div>
+              <small>Diastolic BP (mmHg, 40–140)</small>
+            </div>
+            <input
+              id="diab-bp"
+              type="number"
+              min="40"
+              max="140"
+              step="1"
+              value="80"
+            />
+            <div class="field-error" id="diab-bp-error"></div>
+          </div>
+
+          <div class="input-card" id="diab-skin-card">
+            <div>
+              <div class="input-card-title">Skin Thickness</div>
+              <small>Triceps skin fold (mm, 5–80)</small>
+            </div>
+            <input
+              id="diab-skin"
+              type="number"
+              min="5"
+              max="80"
+              step="1"
+              value="25"
+            />
+            <div class="field-error" id="diab-skin-error"></div>
+          </div>
+
+          <div class="input-card" id="diab-insulin-card">
+            <div>
+              <div class="input-card-title">Insulin</div>
+              <small>Serum insulin (μU/mL, 0–400)</small>
+            </div>
+            <input
+              id="diab-insulin"
+              type="number"
+              min="0"
+              max="400"
+              step="1"
+              value="100"
+            />
+            <div class="field-error" id="diab-insulin-error"></div>
+          </div>
+
+          <div class="input-card" id="diab-bmi-card">
+            <div>
+              <div class="input-card-title">BMI</div>
+              <small>Body mass index (10–60)</small>
+            </div>
+            <input
+              id="diab-bmi"
+              type="number"
+              min="10"
+              max="60"
+              step="0.1"
+              value="28.0"
+            />
+            <div class="field-error" id="diab-bmi-error"></div>
+          </div>
+
+          <div class="input-card" id="diab-dpf-card">
+            <div>
+              <div class="input-card-title">Diabetes Pedigree</div>
+              <small>Diabetes pedigree function (0–2.5)</small>
+            </div>
+            <input
+              id="diab-dpf"
+              type="number"
+              min="0"
+              max="2.5"
+              step="0.01"
+              value="0.5"
+            />
+            <div class="field-error" id="diab-dpf-error"></div>
+          </div>
+
+          <div class="input-card" id="diab-age-card">
+            <div>
+              <div class="input-card-title">Age</div>
+              <small>Age in years (18–120)</small>
+            </div>
+            <input id="diab-age" type="number" min="18" max="120" value="40" />
+            <div class="field-error" id="diab-age-error"></div>
+          </div>
+        </div>
+
+        <div
+          class="analysis-result-heading"
+          id="diab-run"
+          style="cursor: pointer"
+        >
+          <h2>Analysis Result</h2>
+          <span
+            id="diab-status"
+            style="margin-left: 0.75rem; font-size: 0.85rem; display: block"
+          ></span>
+        </div>
+
+        <div class="results-grid">
+          <div class="result-panel" id="diab-result-panel">
+            <h3>Result</h3>
+            <p id="diab-result" class="result-placeholder">
+              Enter values above and click "Run Analysis" to see the predicted
+              diabetes risk.
+            </p>
+            <p id="diab-extra" class="diab-extra"></p>
+            <p class="diab-disclaimer">
+              This is an educational tool, not a diagnostic test or medical
+              advice.
+            </p>
+            <button
+              id="diab-use-overall"
+              type="button"
+              style="
+                margin-top: 0.9rem;
+                padding: 0.5rem 1rem;
+                border-radius: 999px;
+                border: none;
+                background: linear-gradient(90deg, #0f766e, #14b8a6);
+                color: #ecfeff;
+                font-size: 0.8rem;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                cursor: pointer;
+              "
+            >
+              Use in overall risk
+            </button>
+          </div>
+
+          <div class="result-panel" id="diab-impact-panel">
+            <h3>Feature Impact</h3>
+            <p class="diab-impact-note">
+              Relative impact of key clinical features on today's diabetes risk
+              (scale 1–5).
+            </p>
+            <div id="diab-impact-bars" class="diab-impact-bars">
+              <div class="diab-impact-row">
+                <span class="diab-impact-label">Glucose</span>
+                <div class="diab-impact-bar-bg">
+                  <div
+                    class="diab-impact-bar-fill"
+                    data-feature="glucose"
+                  ></div>
+                </div>
+                <span class="diab-impact-score" data-score="glucose">–</span>
+              </div>
+              <div class="diab-impact-row">
+                <span class="diab-impact-label">BMI</span>
+                <div class="diab-impact-bar-bg">
+                  <div class="diab-impact-bar-fill" data-feature="bmi"></div>
+                </div>
+                <span class="diab-impact-score" data-score="bmi">–</span>
+              </div>
+              <div class="diab-impact-row">
+                <span class="diab-impact-label">Age</span>
+                <div class="diab-impact-bar-bg">
+                  <div class="diab-impact-bar-fill" data-feature="age"></div>
+                </div>
+                <span class="diab-impact-score" data-score="age">–</span>
+              </div>
+              <div class="diab-impact-row">
+                <span class="diab-impact-label">Pregnancies</span>
+                <div class="diab-impact-bar-bg">
+                  <div
+                    class="diab-impact-bar-fill"
+                    data-feature="pregnancies"
+                  ></div>
+                </div>
+                <span class="diab-impact-score" data-score="pregnancies"
+                  >–</span
+                >
+              </div>
+              <div class="diab-impact-row">
+                <span class="diab-impact-label">Blood Pressure</span>
+                <div class="diab-impact-bar-bg">
+                  <div class="diab-impact-bar-fill" data-feature="bp"></div>
+                </div>
+                <span class="diab-impact-score" data-score="bp">–</span>
+              </div>
+              <div class="diab-impact-row">
+                <span class="diab-impact-label">Skin Thickness</span>
+                <div class="diab-impact-bar-bg">
+                  <div class="diab-impact-bar-fill" data-feature="skin"></div>
+                </div>
+                <span class="diab-impact-score" data-score="skin">–</span>
+              </div>
+              <div class="diab-impact-row">
+                <span class="diab-impact-label">Insulin</span>
+                <div class="diab-impact-bar-bg">
+                  <div
+                    class="diab-impact-bar-fill"
+                    data-feature="insulin"
+                  ></div>
+                </div>
+                <span class="diab-impact-score" data-score="insulin">–</span>
+              </div>
+              <div class="diab-impact-row">
+                <span class="diab-impact-label">Pedigree</span>
+                <div class="diab-impact-bar-bg">
+                  <div class="diab-impact-bar-fill" data-feature="dpf"></div>
+                </div>
+                <span class="diab-impact-score" data-score="dpf">–</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script>
+      function getQueryParam(name) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+      }
+
+      const diabReturnToOverall = getQueryParam("return") === "overall";
+      let lastDiabResult = null;
+
+      function diabInterpretation(level) {
+        const l = String(level || "").toUpperCase();
+        if (l === "LOW") {
+          return "Model sees low diabetes risk today based on the values you entered.";
+        }
+        if (l === "MEDIUM") {
+          return "Model sees a moderate diabetes risk today; consider monitoring these measurements over time.";
+        }
+        if (l === "HIGH") {
+          return "Model sees a higher diabetes risk today based on several measurements; consider discussing these results with a healthcare professional.";
+        }
+        return "Model could not clearly classify today's risk level.";
+      }
+
+      function diabScoreGlucose(glucose) {
+        const g = Number(glucose || 0);
+        if (g <= 90) return 1;
+        if (g <= 110) return 2;
+        if (g <= 125) return 3;
+        if (g <= 160) return 4;
+        return 5;
+      }
+
+      function diabScoreBMI(bmi) {
+        const b = Number(bmi || 0);
+        if (b < 22) return 1;
+        if (b < 25) return 2;
+        if (b < 30) return 3;
+        if (b < 35) return 4;
+        return 5;
+      }
+
+      function diabScoreAge(age) {
+        const a = Number(age || 0);
+        if (a < 30) return 1;
+        if (a < 40) return 2;
+        if (a < 50) return 3;
+        if (a < 60) return 4;
+        return 5;
+      }
+
+      function diabScorePregnancies(p) {
+        const n = Number(p || 0);
+        if (n === 0) return 1;
+        if (n <= 2) return 2;
+        if (n <= 5) return 3;
+        if (n <= 8) return 4;
+        return 5;
+      }
+
+      function diabScoreBP(bp) {
+        const b = Number(bp || 0);
+        if (b < 70) return 1;
+        if (b < 80) return 2;
+        if (b < 90) return 3;
+        if (b < 100) return 4;
+        return 5;
+      }
+
+      function diabScoreSkin(skin) {
+        const s = Number(skin || 0);
+        if (s < 15) return 1;
+        if (s < 25) return 2;
+        if (s < 35) return 3;
+        if (s < 45) return 4;
+        return 5;
+      }
+
+      function diabScoreInsulin(ins) {
+        const i = Number(ins || 0);
+        if (i < 80) return 1;
+        if (i < 120) return 2;
+        if (i < 180) return 3;
+        if (i < 250) return 4;
+        return 5;
+      }
+
+      function diabScoreDPF(dpf) {
+        const v = Number(dpf || 0);
+        if (v < 0.3) return 1;
+        if (v < 0.6) return 2;
+        if (v < 0.9) return 3;
+        if (v < 1.2) return 4;
+        return 5;
+      }
+
+      function updateDiabImpactBars(payload) {
+        const glucose = Number(payload.Glucose || 0);
+        const bmi = Number(payload.BMI || 0);
+        const age = Number(payload.Age || 0);
+        const pregnancies = Number(payload.Pregnancies || 0);
+        const bp = Number(payload.BloodPressure || 0);
+        const skin = Number(payload.SkinThickness || 0);
+        const insulin = Number(payload.Insulin || 0);
+        const dpf = Number(payload.DiabetesPedigreeFunction || 0);
+
+        const features = [
+          { key: "glucose", score: diabScoreGlucose(glucose) },
+          { key: "bmi", score: diabScoreBMI(bmi) },
+          { key: "age", score: diabScoreAge(age) },
+          { key: "pregnancies", score: diabScorePregnancies(pregnancies) },
+          { key: "bp", score: diabScoreBP(bp) },
+          { key: "skin", score: diabScoreSkin(skin) },
+          { key: "insulin", score: diabScoreInsulin(insulin) },
+          { key: "dpf", score: diabScoreDPF(dpf) },
+        ];
+
+        features.forEach(({ key, score }) => {
+          const bar = document.querySelector(
+            `.diab-impact-bar-fill[data-feature="${key}"]`,
+          );
+          const scoreLabel = document.querySelector(
+            `.diab-impact-score[data-score="${key}"]`,
+          );
+
+          if (!bar || !scoreLabel) return;
+
+          bar.classList.remove(
+            "score-1",
+            "score-2",
+            "score-3",
+            "score-4",
+            "score-5",
+          );
+
+          if (!score) {
+            bar.style.width = "0%";
+            scoreLabel.textContent = "–";
+            return;
+          }
+
+          const widthPct = (score / 5) * 100;
+          bar.style.width = `${widthPct}%`;
+          scoreLabel.textContent = `${score}/5`;
+
+          const rounded = Math.min(5, Math.max(1, Math.round(score)));
+          bar.classList.add(`score-${rounded}`);
+        });
+      }
+
+      function clearDiabErrors() {
+        const fields = [
+          {
+            cardId: "diab-pregnancies-card",
+            errorId: "diab-pregnancies-error",
+          },
+          { cardId: "diab-glucose-card", errorId: "diab-glucose-error" },
+          { cardId: "diab-bp-card", errorId: "diab-bp-error" },
+          { cardId: "diab-skin-card", errorId: "diab-skin-error" },
+          { cardId: "diab-insulin-card", errorId: "diab-insulin-error" },
+          { cardId: "diab-bmi-card", errorId: "diab-bmi-error" },
+          { cardId: "diab-dpf-card", errorId: "diab-dpf-error" },
+          { cardId: "diab-age-card", errorId: "diab-age-error" },
+        ];
+
+        fields.forEach(({ cardId, errorId }) => {
+          const card = document.getElementById(cardId);
+          const err = document.getElementById(errorId);
+          if (card) card.classList.remove("has-error");
+          if (err) err.textContent = "";
+        });
+      }
+
+      function validateDiabInputs() {
+        clearDiabErrors();
+
+        const defs = [
+          {
+            id: "diab-pregnancies",
+            cardId: "diab-pregnancies-card",
+            errorId: "diab-pregnancies-error",
+            label: "Pregnancies",
+            min: 0,
+            max: 20,
+          },
+          {
+            id: "diab-glucose",
+            cardId: "diab-glucose-card",
+            errorId: "diab-glucose-error",
+            label: "Glucose",
+            min: 40,
+            max: 300,
+          },
+          {
+            id: "diab-bp",
+            cardId: "diab-bp-card",
+            errorId: "diab-bp-error",
+            label: "Blood pressure",
+            min: 40,
+            max: 140,
+          },
+          {
+            id: "diab-skin",
+            cardId: "diab-skin-card",
+            errorId: "diab-skin-error",
+            label: "Skin thickness",
+            min: 5,
+            max: 80,
+          },
+          {
+            id: "diab-insulin",
+            cardId: "diab-insulin-card",
+            errorId: "diab-insulin-error",
+            label: "Insulin",
+            min: 0,
+            max: 400,
+          },
+          {
+            id: "diab-bmi",
+            cardId: "diab-bmi-card",
+            errorId: "diab-bmi-error",
+            label: "BMI",
+            min: 10,
+            max: 60,
+          },
+          {
+            id: "diab-dpf",
+            cardId: "diab-dpf-card",
+            errorId: "diab-dpf-error",
+            label: "Diabetes pedigree",
+            min: 0,
+            max: 2.5,
+          },
+          {
+            id: "diab-age",
+            cardId: "diab-age-card",
+            errorId: "diab-age-error",
+            label: "Age",
+            min: 18,
+            max: 120,
+          },
+        ];
+
+        let ok = true;
+
+        defs.forEach((f) => {
+          const input = document.getElementById(f.id);
+          const card = document.getElementById(f.cardId);
+          const err = document.getElementById(f.errorId);
+          if (!input || !card || !err) return;
+
+          const raw = input.value;
+          const val = Number(raw);
+          if (!raw) {
+            ok = false;
+            card.classList.add("has-error");
+            err.textContent = `${f.label} is required.`;
+            return;
+          }
+          if (Number.isNaN(val) || val < f.min || val > f.max) {
+            ok = false;
+            card.classList.add("has-error");
+            err.textContent = `${f.label} should be between ${f.min} and ${f.max}.`;
+          }
+        });
+
+        return ok;
+      }
+
+      async function runDiabetesAnalysis() {
+        const statusEl = document.getElementById("diab-status");
+        const resultEl = document.getElementById("diab-result");
+        const extraEl = document.getElementById("diab-extra");
+        const panelEl = document.getElementById("diab-result-panel");
+        const impactPanelEl = document.getElementById("diab-impact-panel");
+
+        statusEl.textContent = "";
+        if (!validateDiabInputs()) {
+          statusEl.textContent = "Please fix the highlighted inputs.";
+          if (extraEl) extraEl.textContent = "";
+          return;
+        }
+
+        statusEl.textContent = "Running analysis...";
+        if (panelEl) {
+          panelEl.classList.remove("risk-low", "risk-moderate", "risk-high");
+        }
+        if (impactPanelEl) {
+          impactPanelEl.classList.remove(
+            "risk-low",
+            "risk-moderate",
+            "risk-high",
+          );
+        }
+
+        const payload = {
+          Pregnancies: Number(
+            document.getElementById("diab-pregnancies").value || 0,
+          ),
+          Glucose: Number(document.getElementById("diab-glucose").value || 0),
+          BloodPressure: Number(document.getElementById("diab-bp").value || 0),
+          SkinThickness: Number(
+            document.getElementById("diab-skin").value || 0,
+          ),
+          Insulin: Number(document.getElementById("diab-insulin").value || 0),
+          BMI: Number(document.getElementById("diab-bmi").value || 0),
+          DiabetesPedigreeFunction: Number(
+            document.getElementById("diab-dpf").value || 0,
+          ),
+          Age: Number(document.getElementById("diab-age").value || 0),
+        };
+
+        // Update feature impact bars based on current inputs
+        updateDiabImpactBars(payload);
+
+        try {
+          const resp = await fetch("/api/diabetes", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          const data = await resp.json();
+          if (!resp.ok) {
+            statusEl.textContent = "Error";
+            resultEl.textContent = data.error || "Request failed";
+            if (extraEl) extraEl.textContent = "";
+            return;
+          }
+
+          statusEl.textContent = "";
+          const probPct = (data.probability * 100).toFixed(2);
+          const level = String(data.risk_level || "");
+          resultEl.innerHTML = `Estimated diabetes probability: <strong>${probPct}%</strong><br />Risk level today: <strong>${level}</strong> (LOW / MEDIUM / HIGH).`;
+
+          if (extraEl) {
+            const interp = diabInterpretation(level);
+            extraEl.textContent = `${interp} See the Feature Impact panel on the right to understand which measurements contributed most today.`;
+          }
+
+          lastDiabResult = data;
+
+          if (panelEl || impactPanelEl) {
+            const levelUpper = String(data.risk_level || "").toUpperCase();
+            let cls = "risk-low";
+            if (levelUpper === "HIGH") cls = "risk-high";
+            else if (levelUpper === "MEDIUM") cls = "risk-moderate";
+
+            if (panelEl) {
+              panelEl.classList.remove(
+                "risk-low",
+                "risk-moderate",
+                "risk-high",
+              );
+              panelEl.classList.add(cls);
+            }
+            if (impactPanelEl) {
+              impactPanelEl.classList.remove(
+                "risk-low",
+                "risk-moderate",
+                "risk-high",
+              );
+              impactPanelEl.classList.add(cls);
+            }
+          }
+        } catch (err) {
+          console.error(err);
+          statusEl.textContent = "Error";
+          resultEl.textContent = "Could not contact the analysis server.";
+        }
+      }
+
+      function initDiabOverallIntegration() {
+        const btn = document.getElementById("diab-use-overall");
+        if (!btn) return;
+
+        if (!diabReturnToOverall) {
+          btn.style.display = "none";
+          return;
+        }
+
+        btn.addEventListener("click", () => {
+          if (!lastDiabResult) {
+            alert("Please run the diabetes analysis first.");
+            return;
+          }
+          localStorage.setItem(
+            "overall_diab_result",
+            JSON.stringify(lastDiabResult),
+          );
+          window.location.href = "overall.html";
+        });
+      }
+
+      document
+        .getElementById("diab-run")
+        .addEventListener("click", runDiabetesAnalysis);
+
+      window.addEventListener("DOMContentLoaded", initDiabOverallIntegration);
+    </script>
+  </body>
+</html>

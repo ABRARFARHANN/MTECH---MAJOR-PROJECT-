@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carelytics | Blood Pressure Analysis</title>
+    <link rel="stylesheet" href="styles_theme2.css" />
+    <style>
+      .analysis-page {
+        padding-top: 5rem;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #ecfdf5, #eef2ff);
+      }
+
+      .analysis-layout {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 4rem;
+      }
+
+      .analysis-title-block {
+        margin-bottom: 1.8rem;
+        text-align: center;
+      }
+
+      .analysis-title-block h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-transform: none;
+        margin-bottom: 0.5rem;
+      }
+
+      .analysis-title-subtitle {
+        font-size: 1rem;
+        color: #6b7280;
+      }
+
+      .analysis-intro-block {
+        max-width: 880px;
+        margin: 0 auto 2.3rem;
+        text-align: left;
+      }
+
+      .mh-intro-card {
+        border-radius: 18px;
+        padding: 1.4rem 1.75rem 1.6rem;
+        background: #ffffff;
+        border: 1px solid rgba(209, 213, 219, 0.85);
+        box-shadow: 0 16px 40px rgba(148, 163, 184, 0.32);
+      }
+
+      .mh-intro-eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 0.72rem;
+        color: #0f766e;
+        margin-bottom: 0.7rem;
+      }
+
+      .mh-intro-title {
+        font-size: 1.6rem;
+        margin: 0 0 0.8rem;
+      }
+
+      .mh-intro-body {
+        border-left: 3px solid #0f766e;
+        padding-left: 1.25rem;
+        margin-top: 0.4rem;
+      }
+
+      .mh-intro-body p,
+      .mh-intro-body li {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #374151;
+      }
+
+      .mh-intro-body ul {
+        margin: 0.9rem 0 0.6rem;
+        padding-left: 1.1rem;
+      }
+
+      .mh-intro-note {
+        font-size: 0.82rem;
+        color: #6b7280;
+        margin-top: 0.9rem;
+        font-style: italic;
+        background: #f9fafb;
+        padding: 0.55rem 0.95rem;
+        border-radius: 999px;
+      }
+
+      .analysis-input-heading {
+        margin-top: 1.75rem;
+        margin-bottom: 0.6rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: center;
+      }
+
+      .analysis-input-heading h2 {
+        margin: 0 0 0.35rem;
+        font-size: 1.25rem;
+        font-weight: 650;
+        color: #0f172a;
+      }
+
+      .analysis-input-heading p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #4b5563;
+      }
+
+      .inputs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.2rem 1.4rem;
+        margin-bottom: 2rem;
+      }
+
+      .input-card {
+        border: 1px solid #d1d5db;
+        border-radius: 0.75rem;
+        background: #ffffff;
+        padding: 1.2rem 1.4rem;
+        min-height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition:
+          box-shadow 0.15s ease,
+          transform 0.15s ease,
+          border-color 0.15s ease,
+          background-color 0.15s ease;
+      }
+
+      .input-card-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.35rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .input-card small {
+        font-size: 0.8rem;
+        color: #6b7280;
+      }
+
+      .input-card select,
+      .input-card input {
+        margin-top: 0.65rem;
+        padding: 0.5rem 0.6rem;
+        border-radius: 0.5rem;
+        border: 1px solid #d1d5db;
+        font-size: 0.85rem;
+        width: 100%;
+      }
+
+      .input-card:hover {
+        border-color: #0f766e;
+        box-shadow: 0 18px 45px rgba(148, 163, 184, 0.55);
+        transform: translateY(-4px);
+        background: radial-gradient(circle at top left, #ffffff, #e0f2fe 65%);
+      }
+
+      .analysis-result-heading {
+        text-align: center;
+        margin-top: 0.5rem;
+        background: linear-gradient(90deg, #059669, #10b981);
+        color: #f9fafb;
+        border: 1px solid #047857;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 0.9rem;
+        padding: 1.4rem 1.6rem;
+        margin-bottom: 1.5rem;
+        transition:
+          transform 0.1s ease,
+          box-shadow 0.1s ease,
+          background 0.15s ease;
+      }
+
+      .analysis-result-heading h2 {
+        margin: 0;
+        font-size: 1.05rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .analysis-result-heading:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 25px rgba(4, 120, 87, 0.25);
+        background: linear-gradient(90deg, #10b981, #22c55e);
+      }
+
+      .results-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 2fr);
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .result-panel {
+        border: 1px solid #d1d5db;
+        border-radius: 0.75rem;
+        background: #ffffff;
+        padding: 1.6rem 1.8rem;
+        min-height: 200px;
+      }
+
+      .result-panel h3 {
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .result-placeholder {
+        font-size: 0.85rem;
+        color: #6b7280;
+      }
+
+      /* BP feature impact styling */
+      .bp-impact-note {
+        font-size: 0.82rem;
+        color: #6b7280;
+        margin-bottom: 0.9rem;
+      }
+
+      .bp-impact-bars {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .bp-impact-row {
+        display: grid;
+        grid-template-columns: 110px minmax(0, 1fr) 32px;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        padding: 0.1rem 0.3rem;
+        border-radius: 0.6rem;
+        transition:
+          transform 0.15s ease,
+          background-color 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      .bp-impact-row:hover {
+        transform: scale(1.02);
+        background-color: #f9fafb;
+        box-shadow: 0 6px 16px rgba(148, 163, 184, 0.35);
+      }
+
+      .bp-impact-label {
+        font-weight: 500;
+        color: #374151;
+      }
+
+      .bp-impact-bar-bg {
+        position: relative;
+        height: 0.6rem;
+        border-radius: 999px;
+        background: #e5e7eb;
+        overflow: hidden;
+        transition: height 0.15s ease;
+      }
+
+      .bp-impact-row:hover .bp-impact-bar-bg {
+        height: 0.8rem;
+      }
+
+      .bp-impact-bar-fill {
+        position: absolute;
+        inset: 0;
+        border-radius: 999px;
+        width: 0%;
+        transition: width 0.4s ease;
+      }
+
+      .bp-impact-bar-fill.score-1 {
+        background: #22c55e;
+      }
+
+      .bp-impact-bar-fill.score-2 {
+        background: linear-gradient(90deg, #22c55e, #eab308);
+      }
+
+      .bp-impact-bar-fill.score-3 {
+        background: #eab308;
+      }
+
+      .bp-impact-bar-fill.score-4 {
+        background: linear-gradient(90deg, #eab308, #ef4444);
+      }
+
+      .bp-impact-bar-fill.score-5 {
+        background: #ef4444;
+      }
+
+      .bp-impact-score {
+        font-weight: 600;
+        color: #111827;
+        text-align: right;
+      }
+
+      #bp-impact-panel {
+        transition:
+          transform 0.18s ease,
+          box-shadow 0.18s ease,
+          border-color 0.18s ease,
+          background-color 0.18s ease;
+      }
+
+      #bp-impact-panel:hover {
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 18px 45px rgba(148, 163, 184, 0.45);
+        border-color: #c4b5fd;
+        background-color: #f9fafb;
+      }
+
+      /* Feature impact card risk colouring (aligned with result card) */
+      #bp-impact-panel.risk-low {
+        background: #ecfdf5;
+        border-color: #16a34a;
+      }
+
+      #bp-impact-panel.risk-moderate {
+        background: #fefce8;
+        border-color: #eab308;
+      }
+
+      #bp-impact-panel.risk-high {
+        background: #fef2f2;
+        border-color: #ef4444;
+      }
+
+      /* Result risk colouring for blood pressure */
+      #bp-result-panel {
+        font-size: 1rem;
+      }
+
+      #bp-result {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        font-weight: 550;
+      }
+
+      .bp-extra {
+        font-size: 0.9rem;
+        color: #4b5563;
+        margin-top: 0.7rem;
+      }
+
+      .bp-disclaimer {
+        font-size: 0.78rem;
+        color: #9ca3af;
+        margin-top: 0.6rem;
+      }
+
+      #bp-result-panel.risk-low {
+        background: #ecfdf5;
+        border-color: #16a34a;
+        color: #14532d;
+      }
+
+      #bp-result-panel.risk-low #bp-result {
+        color: #14532d;
+      }
+
+      #bp-result-panel.risk-moderate {
+        background: #fefce8;
+        border-color: #eab308;
+        color: #78350f;
+      }
+
+      #bp-result-panel.risk-moderate #bp-result {
+        color: #78350f;
+      }
+
+      #bp-result-panel.risk-high {
+        background: #fef2f2;
+        border-color: #ef4444;
+        color: #7f1d1d;
+      }
+
+      #bp-result-panel.risk-high #bp-result {
+        color: #7f1d1d;
+      }
+
+      @media (max-width: 768px) {
+        .analysis-layout {
+          padding-inline: 1.25rem;
+        }
+
+        .results-grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="nav">
+      <div class="nav-inner">
+        <div class="logo">Carelytics</div>
+        <nav class="nav-links">
+          <a href="index.html#home">Home</a>
+          <a href="index.html#about">About</a>
+          <a href="index.html#analysis">Back to Analysis</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="analysis-page">
+      <section class="analysis-layout">
+        <div class="analysis-title-block">
+          <h1>Blood pressure analysis</h1>
+          <p class="analysis-title-subtitle">
+            See how lifestyle and vitals translate into hypertension risk.
+          </p>
+        </div>
+
+        <div class="analysis-intro-block">
+          <div class="mh-intro-card">
+            <p class="mh-intro-eyebrow">Blood pressure model</p>
+            <h2 class="mh-intro-title">How this model uses your data</h2>
+            <div class="mh-intro-body">
+              <p>
+                This model combines simple demographic and vital-sign
+                information to estimate the risk of high blood pressure.
+              </p>
+              <ul>
+                <li>Core demographics such as age and biological sex.</li>
+                <li>
+                  Body composition through height, weight, and derived BMI.
+                </li>
+                <li>
+                  Resting heart rate as a proxy for cardiovascular strain.
+                </li>
+              </ul>
+              <p class="mh-intro-note">
+                Designed for learning and exploration &mdash; not for diagnosis
+                or medical decision making.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="analysis-input-heading">
+          <h2>Provide today's data</h2>
+          <p>Fill in the fields below using information from the same day.</p>
+        </div>
+
+        <div class="inputs-grid">
+          <div class="input-card" id="bp-sex-card">
+            <div>
+              <div class="input-card-title">Sex</div>
+              <small>Biological sex</small>
+            </div>
+            <select id="bp-sex">
+              <option value="1">Male</option>
+              <option value="0">Female</option>
+            </select>
+          </div>
+
+          <div class="input-card" id="bp-age-card">
+            <div>
+              <div class="input-card-title">Age</div>
+              <small>Age in years (18–120)</small>
+            </div>
+            <input id="bp-age" type="number" min="18" max="120" value="45" />
+            <div class="field-error" id="bp-age-error"></div>
+          </div>
+
+          <div class="input-card" id="bp-height-card">
+            <div>
+              <div class="input-card-title">Height</div>
+              <small>Height (cm, 120–220)</small>
+            </div>
+            <input
+              id="bp-height"
+              type="number"
+              min="120"
+              max="220"
+              value="170"
+            />
+            <div class="field-error" id="bp-height-error"></div>
+          </div>
+
+          <div class="input-card" id="bp-weight-card">
+            <div>
+              <div class="input-card-title">Weight</div>
+              <small>Weight (kg, 35–200)</small>
+            </div>
+            <input id="bp-weight" type="number" min="35" max="200" value="70" />
+            <div class="field-error" id="bp-weight-error"></div>
+          </div>
+
+          <div class="input-card" id="bp-hr-card">
+            <div>
+              <div class="input-card-title">Heart Rate</div>
+              <small>Beats per minute (40–140)</small>
+            </div>
+            <input id="bp-hr" type="number" min="40" max="140" value="75" />
+            <div class="field-error" id="bp-hr-error"></div>
+          </div>
+        </div>
+
+        <div
+          class="analysis-result-heading"
+          id="bp-run"
+          style="cursor: pointer"
+        >
+          <h2>Analysis Result</h2>
+          <span
+            id="bp-status"
+            style="margin-left: 0.75rem; font-size: 0.85rem; display: block"
+          ></span>
+        </div>
+
+        <div class="results-grid">
+          <div class="result-panel" id="bp-result-panel">
+            <h3>Result</h3>
+            <p id="bp-result" class="result-placeholder">
+              Enter values above and click "Run Analysis" to see the predicted
+              blood-pressure / hypertension risk level.
+            </p>
+            <p id="bp-extra" class="bp-extra"></p>
+            <p class="bp-disclaimer">
+              This is an educational tool, not a diagnostic test or medical
+              advice.
+            </p>
+            <button
+              id="bp-use-overall"
+              type="button"
+              style="
+                margin-top: 0.9rem;
+                padding: 0.5rem 1rem;
+                border-radius: 999px;
+                border: none;
+                background: linear-gradient(90deg, #0f766e, #14b8a6);
+                color: #ecfeff;
+                font-size: 0.8rem;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                cursor: pointer;
+              "
+            >
+              Use in overall risk
+            </button>
+          </div>
+
+          <div class="result-panel" id="bp-impact-panel">
+            <h3>Feature Impact</h3>
+            <p class="bp-impact-note">
+              Relative impact of key vitals on today's blood pressure risk
+              (scale 1–5).
+            </p>
+            <div id="bp-impact-bars" class="bp-impact-bars">
+              <div class="bp-impact-row">
+                <span class="bp-impact-label">Sex</span>
+                <div class="bp-impact-bar-bg">
+                  <div class="bp-impact-bar-fill" data-feature="sex"></div>
+                </div>
+                <span class="bp-impact-score" data-score="sex">–</span>
+              </div>
+              <div class="bp-impact-row">
+                <span class="bp-impact-label">Age</span>
+                <div class="bp-impact-bar-bg">
+                  <div class="bp-impact-bar-fill" data-feature="age"></div>
+                </div>
+                <span class="bp-impact-score" data-score="age">–</span>
+              </div>
+              <div class="bp-impact-row">
+                <span class="bp-impact-label">Height</span>
+                <div class="bp-impact-bar-bg">
+                  <div class="bp-impact-bar-fill" data-feature="height"></div>
+                </div>
+                <span class="bp-impact-score" data-score="height">–</span>
+              </div>
+              <div class="bp-impact-row">
+                <span class="bp-impact-label">Weight</span>
+                <div class="bp-impact-bar-bg">
+                  <div class="bp-impact-bar-fill" data-feature="weight"></div>
+                </div>
+                <span class="bp-impact-score" data-score="weight">–</span>
+              </div>
+              <div class="bp-impact-row">
+                <span class="bp-impact-label">BMI</span>
+                <div class="bp-impact-bar-bg">
+                  <div class="bp-impact-bar-fill" data-feature="bmi"></div>
+                </div>
+                <span class="bp-impact-score" data-score="bmi">–</span>
+              </div>
+              <div class="bp-impact-row">
+                <span class="bp-impact-label">Heart Rate</span>
+                <div class="bp-impact-bar-bg">
+                  <div class="bp-impact-bar-fill" data-feature="hr"></div>
+                </div>
+                <span class="bp-impact-score" data-score="hr">–</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script>
+      function getQueryParam(name) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+      }
+
+      const bpReturnToOverall = getQueryParam("return") === "overall";
+      let lastBpResult = null;
+
+      function bpInterpretation(level) {
+        const l = String(level || "").toUpperCase();
+        if (l === "LOW") {
+          return "Model sees low hypertension risk today based on the values you entered.";
+        }
+        if (l === "MEDIUM") {
+          return "Model sees a moderate hypertension risk today; consider monitoring these measurements over time.";
+        }
+        if (l === "HIGH") {
+          return "Model sees a higher hypertension risk today based on several measurements; consider discussing these results with a healthcare professional.";
+        }
+        return "Model could not clearly classify today's risk level.";
+      }
+
+      function bpScoreAge(age) {
+        const a = Number(age || 0);
+        if (a < 30) return 1;
+        if (a < 40) return 2;
+        if (a < 55) return 3;
+        if (a < 70) return 4;
+        return 5;
+      }
+
+      function bpScoreBMI(heightCm, weightKg) {
+        const h = Number(heightCm || 0) / 100;
+        const w = Number(weightKg || 0);
+        if (!h || !w) return 0;
+        const bmi = w / (h * h);
+        if (bmi < 22) return 1;
+        if (bmi < 25) return 2;
+        if (bmi < 30) return 3;
+        if (bmi < 35) return 4;
+        return 5;
+      }
+
+      function bpScoreHeartRate(hr) {
+        const r = Number(hr || 0);
+        if (r < 60) return 1;
+        if (r < 75) return 2;
+        if (r < 90) return 3;
+        if (r < 110) return 4;
+        return 5;
+      }
+
+      function bpScoreSex(sex) {
+        const s = Number(sex || 0);
+        // 0 = female, 1 = male (slightly higher impact)
+        return s === 1 ? 3 : 2;
+      }
+
+      function bpScoreHeight(heightCm) {
+        const h = Number(heightCm || 0);
+        if (!h) return 0;
+        if (h >= 160 && h <= 180) return 2;
+        if ((h >= 150 && h < 160) || (h > 180 && h <= 190)) return 3;
+        if ((h >= 140 && h < 150) || (h > 190 && h <= 200)) return 4;
+        return 5;
+      }
+
+      function bpScoreWeight(weightKg) {
+        const w = Number(weightKg || 0);
+        if (!w) return 0;
+        if (w < 60) return 2;
+        if (w < 75) return 3;
+        if (w < 95) return 4;
+        return 5;
+      }
+
+      function updateBpImpactBars(payload) {
+        const age = Number(payload["Age(year)"] || 0);
+        const height = Number(payload["Height(cm)"] || 0);
+        const weight = Number(payload["Weight(kg)"] || 0);
+        const hr = Number(payload["Heart Rate(b/m)"] || 0);
+        const sex = Number(payload["Sex(M/F)"] || 0);
+
+        const features = [
+          { key: "sex", score: bpScoreSex(sex) },
+          { key: "age", score: bpScoreAge(age) },
+          { key: "height", score: bpScoreHeight(height) },
+          { key: "weight", score: bpScoreWeight(weight) },
+          { key: "bmi", score: bpScoreBMI(height, weight) },
+          { key: "hr", score: bpScoreHeartRate(hr) },
+        ];
+
+        features.forEach(({ key, score }) => {
+          const bar = document.querySelector(
+            `.bp-impact-bar-fill[data-feature="${key}"]`,
+          );
+          const scoreLabel = document.querySelector(
+            `.bp-impact-score[data-score="${key}"]`,
+          );
+
+          if (!bar || !scoreLabel) return;
+
+          bar.classList.remove(
+            "score-1",
+            "score-2",
+            "score-3",
+            "score-4",
+            "score-5",
+          );
+
+          if (!score) {
+            bar.style.width = "0%";
+            scoreLabel.textContent = "–";
+            return;
+          }
+
+          const widthPct = (score / 5) * 100;
+          bar.style.width = `${widthPct}%`;
+          scoreLabel.textContent = `${score}/5`;
+
+          const rounded = Math.min(5, Math.max(1, Math.round(score)));
+          bar.classList.add(`score-${rounded}`);
+        });
+      }
+
+      function clearBpErrors() {
+        const fields = [
+          { cardId: "bp-age-card", errorId: "bp-age-error" },
+          { cardId: "bp-height-card", errorId: "bp-height-error" },
+          { cardId: "bp-weight-card", errorId: "bp-weight-error" },
+          { cardId: "bp-hr-card", errorId: "bp-hr-error" },
+        ];
+
+        fields.forEach(({ cardId, errorId }) => {
+          const card = document.getElementById(cardId);
+          const err = document.getElementById(errorId);
+          if (card) card.classList.remove("has-error");
+          if (err) err.textContent = "";
+        });
+      }
+
+      function validateBpInputs() {
+        clearBpErrors();
+
+        const defs = [
+          {
+            id: "bp-age",
+            cardId: "bp-age-card",
+            errorId: "bp-age-error",
+            label: "Age",
+            min: 18,
+            max: 120,
+          },
+          {
+            id: "bp-height",
+            cardId: "bp-height-card",
+            errorId: "bp-height-error",
+            label: "Height",
+            min: 120,
+            max: 220,
+          },
+          {
+            id: "bp-weight",
+            cardId: "bp-weight-card",
+            errorId: "bp-weight-error",
+            label: "Weight",
+            min: 35,
+            max: 200,
+          },
+          {
+            id: "bp-hr",
+            cardId: "bp-hr-card",
+            errorId: "bp-hr-error",
+            label: "Heart rate",
+            min: 40,
+            max: 140,
+          },
+        ];
+
+        let ok = true;
+
+        defs.forEach((f) => {
+          const input = document.getElementById(f.id);
+          const card = document.getElementById(f.cardId);
+          const err = document.getElementById(f.errorId);
+          if (!input || !card || !err) return;
+
+          const raw = input.value;
+          const val = Number(raw);
+          if (!raw) {
+            ok = false;
+            card.classList.add("has-error");
+            err.textContent = `${f.label} is required.`;
+            return;
+          }
+          if (Number.isNaN(val) || val < f.min || val > f.max) {
+            ok = false;
+            card.classList.add("has-error");
+            err.textContent = `${f.label} should be between ${f.min} and ${f.max}.`;
+          }
+        });
+
+        return ok;
+      }
+
+      async function runBpAnalysis() {
+        const statusEl = document.getElementById("bp-status");
+        const resultEl = document.getElementById("bp-result");
+        const extraEl = document.getElementById("bp-extra");
+        const panelEl = document.getElementById("bp-result-panel");
+        const impactPanelEl = document.getElementById("bp-impact-panel");
+
+        statusEl.textContent = "";
+        if (!validateBpInputs()) {
+          statusEl.textContent = "Please fix the highlighted inputs.";
+          if (extraEl) extraEl.textContent = "";
+          return;
+        }
+
+        statusEl.textContent = "Running analysis...";
+        if (panelEl) {
+          panelEl.classList.remove("risk-low", "risk-moderate", "risk-high");
+        }
+        if (impactPanelEl) {
+          impactPanelEl.classList.remove(
+            "risk-low",
+            "risk-moderate",
+            "risk-high",
+          );
+        }
+
+        const payload = {
+          "Sex(M/F)": Number(document.getElementById("bp-sex").value || 0),
+          "Age(year)": Number(document.getElementById("bp-age").value || 0),
+          "Height(cm)": Number(document.getElementById("bp-height").value || 0),
+          "Weight(kg)": Number(document.getElementById("bp-weight").value || 0),
+          "Heart Rate(b/m)": Number(
+            document.getElementById("bp-hr").value || 0,
+          ),
+        };
+
+        // Update feature impact bars based on current inputs
+        updateBpImpactBars(payload);
+
+        try {
+          const resp = await fetch("/api/bp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          const data = await resp.json();
+          if (!resp.ok) {
+            statusEl.textContent = "Error";
+            resultEl.textContent = data.error || "Request failed";
+            if (extraEl) extraEl.textContent = "";
+            return;
+          }
+
+          statusEl.textContent = "";
+          const probPct = (data.probability * 100).toFixed(2);
+          const level = String(data.risk_level || "");
+          resultEl.innerHTML = `Estimated hypertension probability: <strong>${probPct}%</strong><br />Risk level today: <strong>${level}</strong> (LOW / MEDIUM / HIGH).`;
+
+          if (extraEl) {
+            const interp = bpInterpretation(level);
+            extraEl.textContent = `${interp} See the Feature Impact panel on the right to understand which measurements contributed most today.`;
+          }
+
+          lastBpResult = data;
+
+          if (panelEl || impactPanelEl) {
+            const levelUpper = String(data.risk_level || "").toUpperCase();
+            panelEl.classList.remove("risk-low", "risk-moderate", "risk-high");
+            if (impactPanelEl) {
+              impactPanelEl.classList.remove(
+                "risk-low",
+                "risk-moderate",
+                "risk-high",
+              );
+            }
+
+            let cls = "";
+            if (levelUpper === "LOW") cls = "risk-low";
+            else if (levelUpper === "MEDIUM") cls = "risk-moderate";
+            else if (levelUpper === "HIGH") cls = "risk-high";
+
+            if (cls) {
+              panelEl.classList.add(cls);
+              if (impactPanelEl) impactPanelEl.classList.add(cls);
+            }
+          }
+        } catch (err) {
+          console.error(err);
+          statusEl.textContent = "Error";
+          resultEl.textContent = "Could not contact the analysis server.";
+        }
+      }
+
+      function initBpOverallIntegration() {
+        const btn = document.getElementById("bp-use-overall");
+        if (!btn) return;
+
+        if (!bpReturnToOverall) {
+          btn.style.display = "none";
+          return;
+        }
+
+        btn.addEventListener("click", () => {
+          if (!lastBpResult) {
+            alert("Please run the BP analysis first.");
+            return;
+          }
+          localStorage.setItem(
+            "overall_bp_result",
+            JSON.stringify(lastBpResult),
+          );
+          window.location.href = "overall.html";
+        });
+      }
+
+      document
+        .getElementById("bp-run")
+        .addEventListener("click", runBpAnalysis);
+
+      window.addEventListener("DOMContentLoaded", initBpOverallIntegration);
+    </script>
+  </body>
+</html>

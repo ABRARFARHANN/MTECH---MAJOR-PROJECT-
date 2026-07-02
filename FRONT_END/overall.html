@@ -1,0 +1,877 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carelytics | Overall Risk Analysis</title>
+    <link rel="stylesheet" href="styles_theme2.css" />
+    <style>
+      .analysis-page {
+        padding-top: 5rem;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #ecfdf5, #eef2ff);
+      }
+
+      .analysis-layout {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 4rem;
+      }
+
+      .analysis-title-block {
+        margin-bottom: 1.8rem;
+        text-align: center;
+      }
+
+      .analysis-title-block h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-transform: none;
+        margin-bottom: 0.5rem;
+      }
+
+      .analysis-title-subtitle {
+        font-size: 1rem;
+        color: #6b7280;
+      }
+
+      .analysis-intro-block {
+        max-width: 880px;
+        margin: 0 auto 2.3rem;
+        text-align: left;
+      }
+
+      .mh-intro-card {
+        border-radius: 18px;
+        padding: 1.4rem 1.75rem 1.6rem;
+        background: #ffffff;
+        border: 1px solid rgba(209, 213, 219, 0.85);
+        box-shadow: 0 16px 40px rgba(148, 163, 184, 0.32);
+      }
+
+      .mh-intro-eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 0.72rem;
+        color: #0f766e;
+        margin-bottom: 0.7rem;
+      }
+
+      .mh-intro-title {
+        font-size: 1.6rem;
+        margin: 0 0 0.8rem;
+      }
+
+      .mh-intro-body {
+        border-left: 3px solid #0f766e;
+        padding-left: 1.25rem;
+        margin-top: 0.4rem;
+      }
+
+      .mh-intro-body p,
+      .mh-intro-body li {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #374151;
+      }
+
+      .mh-intro-body ul {
+        margin: 0.9rem 0 0.6rem;
+        padding-left: 1.1rem;
+      }
+
+      .mh-intro-note {
+        font-size: 0.82rem;
+        color: #6b7280;
+        margin-top: 0.9rem;
+        font-style: italic;
+        background: #f9fafb;
+        padding: 0.55rem 0.95rem;
+        border-radius: 999px;
+      }
+
+      .analysis-input-heading {
+        margin-top: 1.75rem;
+        margin-bottom: 0.6rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: center;
+      }
+
+      .analysis-input-heading h2 {
+        margin: 0 0 0.35rem;
+        font-size: 1.25rem;
+        font-weight: 650;
+        color: #0f172a;
+      }
+
+      .analysis-input-heading p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #4b5563;
+      }
+
+      .inputs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.2rem 1.4rem;
+        margin-bottom: 2rem;
+      }
+
+      .input-card {
+        border: 1px solid #d1d5db;
+        border-radius: 0.75rem;
+        background: #ffffff;
+        padding: 1.2rem 1.4rem;
+        min-height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition:
+          box-shadow 0.15s ease,
+          transform 0.15s ease,
+          border-color 0.15s ease,
+          background-color 0.15s ease;
+      }
+
+      .input-card-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.35rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .input-card small {
+        font-size: 0.8rem;
+        color: #6b7280;
+      }
+
+      .input-card select,
+      .input-card input {
+        margin-top: 0.65rem;
+        padding: 0.5rem 0.6rem;
+        border-radius: 0.5rem;
+        border: 1px solid #d1d5db;
+        font-size: 0.85rem;
+        width: 100%;
+      }
+
+      .input-card:hover {
+        border-color: #0f766e;
+        box-shadow: 0 18px 45px rgba(148, 163, 184, 0.55);
+        transform: translateY(-4px);
+        background: radial-gradient(circle at top left, #ffffff, #e0f2fe 65%);
+      }
+
+      .overall-nav-btn {
+        margin-top: 0.9rem;
+        align-self: flex-start;
+        padding: 0.55rem 1.1rem;
+        border-radius: 999px;
+        border: none;
+        background: linear-gradient(90deg, #0f766e, #14b8a6);
+        color: #ecfeff;
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(15, 118, 110, 0.35);
+        transition:
+          transform 0.1s ease,
+          box-shadow 0.1s ease,
+          background 0.15s ease;
+      }
+
+      .overall-nav-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 14px 30px rgba(15, 118, 110, 0.4);
+        background: linear-gradient(90deg, #14b8a6, #22c55e);
+      }
+
+      .analysis-result-heading {
+        text-align: center;
+        margin-top: 0.5rem;
+        background: linear-gradient(90deg, #059669, #10b981);
+        color: #f9fafb;
+        border: 1px solid #047857;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 0.9rem;
+        padding: 1.4rem 1.6rem;
+        margin-bottom: 1.5rem;
+        transition:
+          transform 0.1s ease,
+          box-shadow 0.1s ease,
+          background 0.15s ease;
+      }
+
+      .analysis-result-heading h2 {
+        margin: 0;
+        font-size: 1.05rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .analysis-result-heading:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 25px rgba(4, 120, 87, 0.25);
+        background: linear-gradient(90deg, #10b981, #22c55e);
+      }
+
+      .results-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 2fr);
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .result-panel {
+        border: 1px solid #d1d5db;
+        border-radius: 0.75rem;
+        background: #ffffff;
+        padding: 1.4rem 1.6rem;
+        min-height: 220px;
+      }
+
+      .result-panel h3 {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .result-placeholder {
+        font-size: 0.85rem;
+        color: #6b7280;
+      }
+
+      .ov-emergency {
+        margin-top: 0.9rem;
+        padding: 0.7rem 0.9rem;
+        border-radius: 0.75rem;
+        background: #fef2f2;
+        border: 1px solid #ef4444;
+        color: #7f1d1d;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      @keyframes ov-flash {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      .ov-emergency-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.7);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 50;
+      }
+
+      .ov-emergency-modal {
+        max-width: 420px;
+        margin: 0 1.5rem;
+        background: #fee2e2;
+        border-radius: 1rem;
+        border: 1px solid #b91c1c;
+        box-shadow: 0 25px 60px rgba(127, 29, 29, 0.6);
+        padding: 1.5rem 1.75rem 1.4rem;
+        color: #7f1d1d;
+        animation: ov-flash 1s ease-in-out 4;
+      }
+
+      .ov-emergency-modal h2 {
+        margin: 0 0 0.6rem;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      .ov-emergency-modal p {
+        margin: 0 0 0.9rem;
+        font-size: 0.9rem;
+      }
+
+      .ov-emergency-dismiss {
+        border: none;
+        border-radius: 999px;
+        padding: 0.5rem 1.2rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        background: #111827;
+        color: #f9fafb;
+        cursor: pointer;
+      }
+
+      /* Result risk colouring for overall risk */
+      #ov-result-panel {
+        font-size: 1rem;
+      }
+
+      #ov-result {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        font-weight: 500;
+      }
+
+      #ov-breakdown {
+        font-size: 0.96rem;
+        line-height: 1.7;
+      }
+
+      /* Overall component impact bars (BP / Diabetes / Mental) */
+      .ov-impact-bars {
+        margin-top: 0.8rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .ov-impact-row {
+        display: grid;
+        grid-template-columns: 115px minmax(0, 1fr) 36px;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        padding: 0.1rem 0.3rem;
+        border-radius: 0.6rem;
+        transition:
+          transform 0.15s ease,
+          background-color 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      .ov-impact-row:hover {
+        transform: scale(1.02);
+        background-color: #f9fafb;
+        box-shadow: 0 6px 16px rgba(148, 163, 184, 0.35);
+      }
+
+      .ov-impact-label {
+        font-weight: 500;
+        color: #374151;
+      }
+
+      .ov-impact-bar-bg {
+        position: relative;
+        height: 0.6rem;
+        border-radius: 999px;
+        background: #e5e7eb;
+        overflow: hidden;
+        transition: height 0.15s ease;
+      }
+
+      .ov-impact-row:hover .ov-impact-bar-bg {
+        height: 0.8rem;
+      }
+
+      .ov-impact-bar-fill {
+        position: absolute;
+        inset: 0;
+        border-radius: 999px;
+        width: 0%;
+        transition: width 0.4s ease;
+      }
+
+      .ov-impact-bar-fill.score-1 {
+        background: #22c55e;
+      }
+
+      .ov-impact-bar-fill.score-2 {
+        background: linear-gradient(90deg, #22c55e, #eab308);
+      }
+
+      .ov-impact-bar-fill.score-3 {
+        background: #eab308;
+      }
+
+      .ov-impact-bar-fill.score-4 {
+        background: linear-gradient(90deg, #eab308, #ef4444);
+      }
+
+      .ov-impact-bar-fill.score-5 {
+        background: #ef4444;
+      }
+
+      .ov-impact-score {
+        font-weight: 600;
+        color: #111827;
+        text-align: right;
+      }
+
+      /* Result risk colouring for overall and component panels */
+      #ov-result-panel.risk-low,
+      #ov-component-panel.risk-low {
+        background: #ecfdf5;
+        border-color: #16a34a;
+        color: #14532d;
+      }
+
+      #ov-result-panel.risk-low #ov-result {
+        color: #14532d;
+      }
+
+      #ov-result-panel.risk-moderate,
+      #ov-component-panel.risk-moderate {
+        background: #fefce8;
+        border-color: #eab308;
+        color: #78350f;
+      }
+
+      #ov-result-panel.risk-moderate #ov-result {
+        color: #78350f;
+      }
+
+      #ov-result-panel.risk-high,
+      #ov-component-panel.risk-high {
+        background: #fef2f2;
+        border-color: #ef4444;
+        color: #7f1d1d;
+      }
+
+      #ov-result-panel.risk-high #ov-result {
+        color: #7f1d1d;
+      }
+
+      @media (max-width: 768px) {
+        .analysis-layout {
+          padding-inline: 1.25rem;
+        }
+
+        .results-grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="nav">
+      <div class="nav-inner">
+        <div class="logo">Carelytics</div>
+        <nav class="nav-links">
+          <a href="index.html#home">Home</a>
+          <a href="index.html#about">About</a>
+          <a href="index.html#analysis">Back to Analysis</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="analysis-page">
+      <section class="analysis-layout">
+        <div class="analysis-title-block">
+          <h1>Overall risk analysis</h1>
+          <p class="analysis-title-subtitle">
+            View an integrated risk profile that combines all three models into
+            a single, interpretable overview.
+          </p>
+        </div>
+
+        <div class="analysis-intro-block">
+          <div class="mh-intro-card">
+            <p class="mh-intro-eyebrow">Overall fusion model</p>
+            <h2 class="mh-intro-title">How this model combines your data</h2>
+            <div class="mh-intro-body">
+              <p>
+                This overall model takes the key inputs from each individual
+                risk model and fuses them into a single, interpretable overall
+                risk profile.
+              </p>
+              <ul>
+                <li>
+                  Blood pressure and demographic features from the BP model.
+                </li>
+                <li>Core clinical measurements from the diabetes model.</li>
+                <li>
+                  Summaries of sleep, activity, and mental health context.
+                </li>
+              </ul>
+              <p class="mh-intro-note">
+                Designed for learning and exploration &mdash; not for diagnosis
+                or medical decision making.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="analysis-input-heading">
+          <h2>Provide today's data</h2>
+          <p>Fill in the fields below using information from the same day.</p>
+        </div>
+
+        <div class="inputs-grid">
+          <div class="input-card">
+            <div>
+              <div class="input-card-title">BP & demographics</div>
+              <small>Sex, age, height (cm), weight (kg), heart rate</small>
+            </div>
+            <p style="margin-top: 0.7rem; font-size: 0.85rem; color: #4b5563">
+              Run the blood pressure analysis with today's vitals, then send the
+              risk result back into this overall view.
+            </p>
+            <button
+              type="button"
+              class="overall-nav-btn"
+              onclick="openModel('bp')"
+            >
+              Open BP model
+            </button>
+          </div>
+
+          <div class="input-card">
+            <div>
+              <div class="input-card-title">Diabetes clinical data</div>
+              <small>Key PIMA-style features</small>
+            </div>
+            <p style="margin-top: 0.7rem; font-size: 0.85rem; color: #4b5563">
+              Use the diabetes model with your latest clinical values, then
+              bring that risk result back here.
+            </p>
+            <button
+              type="button"
+              class="overall-nav-btn"
+              onclick="openModel('diabetes')"
+            >
+              Open diabetes model
+            </button>
+          </div>
+
+          <div class="input-card">
+            <div>
+              <div class="input-card-title">Mental health summary</div>
+              <small>High-level mental-health inputs</small>
+            </div>
+            <p style="margin-top: 0.7rem; font-size: 0.85rem; color: #4b5563">
+              On the mental health page, enter sleep, activity, and text data,
+              then send the fused daily risk back here.
+            </p>
+            <button
+              type="button"
+              class="overall-nav-btn"
+              onclick="openModel('mental')"
+            >
+              Open mental model
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="analysis-result-heading"
+          id="ov-run"
+          style="cursor: pointer"
+        >
+          <h2>Analysis Result</h2>
+          <span
+            id="ov-status"
+            style="margin-left: 0.75rem; font-size: 0.85rem; display: block"
+          ></span>
+        </div>
+
+        <div class="results-grid">
+          <div class="result-panel" id="ov-result-panel">
+            <h3>Result Output</h3>
+            <p id="ov-result" class="result-placeholder">
+              Click "Run Analysis" to compute BP, diabetes, and mental-health
+              risks and see the fused overall risk levels.
+            </p>
+            <p id="ov-emergency" class="ov-emergency" style="display: none"></p>
+          </div>
+
+          <div class="result-panel" id="ov-component-panel">
+            <h3>Component Breakdown</h3>
+            <p id="ov-breakdown" class="result-placeholder">
+              This panel will summarise each component (BP, diabetes, mental
+              health) and how they combine into the overall risk tiers.
+            </p>
+            <div class="ov-impact-bars">
+              <div class="ov-impact-row">
+                <div class="ov-impact-label">Blood Pressure</div>
+                <div class="ov-impact-bar-bg">
+                  <div
+                    class="ov-impact-bar-fill"
+                    id="ov-bar-bp"
+                    data-feature="bp"
+                  ></div>
+                </div>
+                <div class="ov-impact-score" id="ov-score-bp">–/5</div>
+              </div>
+
+              <div class="ov-impact-row">
+                <div class="ov-impact-label">Diabetes</div>
+                <div class="ov-impact-bar-bg">
+                  <div
+                    class="ov-impact-bar-fill"
+                    id="ov-bar-diabetes"
+                    data-feature="diabetes"
+                  ></div>
+                </div>
+                <div class="ov-impact-score" id="ov-score-diabetes">–/5</div>
+              </div>
+
+              <div class="ov-impact-row">
+                <div class="ov-impact-label">Mental Health</div>
+                <div class="ov-impact-bar-bg">
+                  <div
+                    class="ov-impact-bar-fill"
+                    id="ov-bar-mental"
+                    data-feature="mental"
+                  ></div>
+                </div>
+                <div class="ov-impact-score" id="ov-score-mental">–/5</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div id="ov-emergency-overlay" class="ov-emergency-overlay">
+      <div class="ov-emergency-modal">
+        <h2>High overall risk</h2>
+        <p>
+          The combined risk across blood pressure, diabetes, and mental health
+          is HIGH. This tool is for education only, but we strongly recommend
+          seeking medical attention or professional advice as soon as possible.
+        </p>
+        <button id="ov-emergency-dismiss" class="ov-emergency-dismiss">
+          Got it
+        </button>
+      </div>
+    </div>
+    <script>
+      function openModel(which) {
+        if (which === "bp") {
+          window.location.href = "bp.html?return=overall";
+        } else if (which === "diabetes") {
+          window.location.href = "diabetes.html?return=overall";
+        } else if (which === "mental") {
+          window.location.href = "mental.html?return=overall";
+        }
+      }
+
+      function levelScore(level) {
+        const l = String(level || "").toUpperCase();
+        if (l === "HIGH") return 2;
+        if (l === "MEDIUM" || l === "MODERATE") return 1;
+        return 0;
+      }
+
+      function scoreToLevel(score) {
+        if (score >= 2) return "HIGH";
+        if (score >= 1) return "MEDIUM";
+        return "LOW";
+      }
+
+      // Map LOW / MEDIUM / HIGH to 1–5 scale for component bars
+      function overallLevelToScore(level) {
+        if (!level) return 0;
+        const upper = String(level).toUpperCase();
+        if (upper === "HIGH") return 5;
+        if (upper === "MEDIUM" || upper === "MODERATE") return 3;
+        if (upper === "LOW") return 1;
+        return 0;
+      }
+
+      function updateOverallImpactBars(bpLevel, diabLevel, mhLevel) {
+        const features = [
+          {
+            key: "bp",
+            level: bpLevel,
+            barId: "ov-bar-bp",
+            scoreId: "ov-score-bp",
+          },
+          {
+            key: "diabetes",
+            level: diabLevel,
+            barId: "ov-bar-diabetes",
+            scoreId: "ov-score-diabetes",
+          },
+          {
+            key: "mental",
+            level: mhLevel,
+            barId: "ov-bar-mental",
+            scoreId: "ov-score-mental",
+          },
+        ];
+
+        features.forEach((feat) => {
+          const score = overallLevelToScore(feat.level);
+          const bar = document.getElementById(feat.barId);
+          const scoreEl = document.getElementById(feat.scoreId);
+          if (!bar || !scoreEl) return;
+
+          bar.classList.remove(
+            "score-1",
+            "score-2",
+            "score-3",
+            "score-4",
+            "score-5",
+          );
+
+          if (score >= 1 && score <= 5) {
+            bar.style.width = `${(score / 5) * 100}%`;
+            bar.classList.add(`score-${score}`);
+            scoreEl.textContent = `${score}/5`;
+          } else {
+            bar.style.width = "0%";
+            scoreEl.textContent = "–/5";
+          }
+        });
+      }
+
+      function hideEmergencyOverlay() {
+        const overlay = document.getElementById("ov-emergency-overlay");
+        if (overlay) {
+          overlay.style.display = "none";
+        }
+      }
+
+      function showEmergencyOverlay() {
+        const overlay = document.getElementById("ov-emergency-overlay");
+        if (!overlay) return;
+        overlay.style.display = "flex";
+        // Auto-hide after a few seconds so it "flashes" through the screen.
+        setTimeout(() => {
+          hideEmergencyOverlay();
+        }, 7000);
+      }
+
+      async function runOverallAnalysis() {
+        const statusEl = document.getElementById("ov-status");
+        const resultEl = document.getElementById("ov-result");
+        const breakdownEl = document.getElementById("ov-breakdown");
+        const panelEl = document.getElementById("ov-result-panel");
+        const componentPanelEl = document.getElementById("ov-component-panel");
+        const emergencyEl = document.getElementById("ov-emergency");
+
+        statusEl.textContent = "Running analysis...";
+        if (panelEl) {
+          panelEl.classList.remove("risk-low", "risk-moderate", "risk-high");
+        }
+        if (componentPanelEl) {
+          componentPanelEl.classList.remove(
+            "risk-low",
+            "risk-moderate",
+            "risk-high",
+          );
+        }
+        if (emergencyEl) {
+          emergencyEl.style.display = "none";
+          emergencyEl.textContent = "";
+        }
+        try {
+          const bpRaw = localStorage.getItem("overall_bp_result");
+          const diabRaw = localStorage.getItem("overall_diab_result");
+          const mhRaw = localStorage.getItem("overall_mh_result");
+
+          if (!bpRaw || !diabRaw || !mhRaw) {
+            statusEl.textContent = "Missing component results";
+            resultEl.textContent =
+              "Please run the BP, diabetes, and mental-health analyses first, then try again.";
+            return;
+          }
+
+          const bp = JSON.parse(bpRaw);
+          const diab = JSON.parse(diabRaw);
+          const mh = JSON.parse(mhRaw);
+
+          statusEl.textContent = "";
+
+          const bpText = `${(bp.probability * 100).toFixed(2)}% (${bp.risk_level})`;
+          const diabText = `${(diab.probability * 100).toFixed(2)}% (${diab.risk_level})`;
+          const mhText = `${(mh.probability * 100).toFixed(2)}% (${mh.risk_level})`;
+
+          const scoreBp = levelScore(bp.risk_level);
+          const scoreDiab = levelScore(diab.risk_level);
+          const scoreMh = levelScore(mh.risk_level);
+          const maxScore = Math.max(scoreBp, scoreDiab, scoreMh);
+          const overallLevel = scoreToLevel(maxScore);
+
+          const baseText = `Overall combined risk (all three): ${overallLevel}.`;
+
+          if (overallLevel === "LOW") {
+            const lowDetail =
+              "Your combined risk across blood pressure, diabetes, and mental health appears on the lower side. Keep up your healthy habits and check back periodically.";
+            resultEl.innerHTML = `${baseText}<br /><br />${lowDetail}`;
+          } else {
+            resultEl.textContent = baseText;
+          }
+          if (panelEl || componentPanelEl) {
+            const cls =
+              overallLevel === "LOW"
+                ? "risk-low"
+                : overallLevel === "MEDIUM"
+                  ? "risk-moderate"
+                  : overallLevel === "HIGH"
+                    ? "risk-high"
+                    : "";
+
+            if (cls) {
+              if (panelEl) panelEl.classList.add(cls);
+              if (componentPanelEl) componentPanelEl.classList.add(cls);
+            }
+          }
+
+          if (overallLevel === "HIGH" && emergencyEl) {
+            emergencyEl.textContent =
+              "Emergency signal: overall risk is HIGH. Please consider seeking medical attention or professional advice as soon as possible.";
+            emergencyEl.style.display = "block";
+            showEmergencyOverlay();
+          }
+
+          breakdownEl.innerHTML = `
+            <strong>BP:</strong> ${bpText}<br />
+            <strong>Diabetes:</strong> ${diabText}<br />
+            <strong>Mental health:</strong> ${mhText}.
+          `;
+
+          // Update bar visualisation for component breakdown
+          updateOverallImpactBars(
+            bp.risk_level,
+            diab.risk_level,
+            mh.risk_level,
+          );
+
+          // Component panel uses same LOW/MEDIUM/HIGH colour as overall panel
+        } catch (err) {
+          console.error(err);
+          statusEl.textContent = "Error";
+          resultEl.textContent = "Could not contact the analysis server.";
+        }
+      }
+
+      document
+        .getElementById("ov-run")
+        .addEventListener("click", runOverallAnalysis);
+
+      window.addEventListener("DOMContentLoaded", () => {
+        const overlay = document.getElementById("ov-emergency-overlay");
+        const dismissBtn = document.getElementById("ov-emergency-dismiss");
+        if (dismissBtn) {
+          dismissBtn.addEventListener("click", hideEmergencyOverlay);
+        }
+        if (overlay) {
+          overlay.addEventListener("click", (evt) => {
+            if (evt.target === overlay) {
+              hideEmergencyOverlay();
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

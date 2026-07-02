@@ -1,0 +1,1150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carelytics | Mental Health Analysis</title>
+    <link rel="stylesheet" href="styles_theme2.css" />
+    <style>
+      /* Layout + shared blocks */
+      .analysis-page {
+        padding-top: 5rem;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #ecfdf5, #eef2ff);
+      }
+
+      .analysis-layout {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 4rem;
+      }
+
+      .analysis-input-heading,
+      .analysis-result-heading {
+        border: 1px solid #d1d5db;
+        border-radius: 0.75rem;
+        background: #ffffff;
+        padding: 1.4rem 1.6rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .analysis-title-block {
+        margin-bottom: 1.8rem;
+        text-align: center;
+      }
+
+      .analysis-title-block h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-transform: none;
+        margin-bottom: 0.5rem;
+      }
+
+      .analysis-title-subtitle {
+        font-size: 1rem;
+        color: #6b7280;
+      }
+
+      .analysis-input-heading {
+        text-align: left;
+        max-width: 100%;
+        border-radius: 1rem;
+        padding: 1.4rem 1.8rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 18px 45px rgba(148, 163, 184, 0.45);
+      }
+
+      .analysis-input-heading h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+      }
+
+      .analysis-input-heading p {
+        font-size: 0.96rem;
+        color: #6b7280;
+      }
+
+      .analysis-intro-block {
+        max-width: 880px;
+        margin: 0 auto 2.3rem;
+        text-align: left;
+      }
+
+      .mh-intro-card {
+        border-radius: 18px;
+        padding: 1.4rem 1.75rem 1.6rem;
+        background: #ffffff;
+        border: 1px solid rgba(209, 213, 219, 0.85);
+        box-shadow: 0 16px 40px rgba(148, 163, 184, 0.32);
+      }
+
+      .mh-intro-eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 0.72rem;
+        color: #0f766e;
+        margin-bottom: 0.7rem;
+      }
+
+      .mh-intro-title {
+        font-size: 1.6rem;
+        margin: 0 0 0.8rem;
+      }
+
+      .mh-intro-body {
+        border-left: 3px solid #0f766e;
+        padding-left: 1.25rem;
+        margin-top: 0.4rem;
+      }
+
+      .mh-intro-body p,
+      .mh-intro-body li {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #374151;
+      }
+
+      .mh-intro-body ul {
+        margin: 0.9rem 0 0.6rem;
+        padding-left: 1.1rem;
+      }
+
+      .mh-intro-note {
+        font-size: 0.82rem;
+        color: #6b7280;
+        margin-top: 0.9rem;
+        font-style: italic;
+        background: #f9fafb;
+        padding: 0.55rem 0.95rem;
+        border-radius: 999px;
+      }
+
+      .inputs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.2rem 1.4rem;
+      }
+
+      .input-sections {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-bottom: 2.25rem;
+      }
+
+      .input-section-card {
+        border-radius: 0.9rem;
+        border: 1px solid rgba(209, 213, 219, 0.9);
+        background: rgba(255, 255, 255, 0.96);
+        padding: 1.2rem 1.3rem 1.3rem;
+        box-shadow: 0 12px 35px rgba(148, 163, 184, 0.3);
+      }
+
+      .input-section-header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .input-section-title {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: #0f766e;
+      }
+
+      .input-section-subtitle {
+        font-size: 0.85rem;
+        color: #6b7280;
+      }
+
+      .input-card {
+        border: 1px solid #d1d5db;
+        border-radius: 0.75rem;
+        background: #ffffff;
+        padding: 1.2rem 1.4rem;
+        min-height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition:
+          box-shadow 0.15s ease,
+          transform 0.15s ease,
+          border-color 0.15s ease,
+          background-color 0.15s ease;
+      }
+
+      .input-card-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.35rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .input-card small {
+        font-size: 0.8rem;
+        color: #6b7280;
+      }
+
+      .input-card select,
+      .input-card input {
+        margin-top: 0.65rem;
+        padding: 0.5rem 0.6rem;
+        border-radius: 0.5rem;
+        border: 1px solid #d1d5db;
+        font-size: 0.85rem;
+        width: 100%;
+      }
+
+      .input-card:hover {
+        border-color: #0f766e;
+        box-shadow: 0 18px 45px rgba(148, 163, 184, 0.55);
+        transform: translateY(-4px);
+        background: radial-gradient(circle at top left, #ffffff, #e0f2fe 65%);
+      }
+
+      .analysis-result-heading {
+        text-align: center;
+        margin-top: 0.5rem;
+        background: linear-gradient(90deg, #059669, #10b981);
+        color: #f9fafb;
+        border-color: #047857;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition:
+          transform 0.1s ease,
+          box-shadow 0.1s ease,
+          background 0.15s ease;
+      }
+
+      .analysis-result-heading h2 {
+        margin: 0;
+        font-size: 1.05rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .analysis-result-heading:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 25px rgba(4, 120, 87, 0.25);
+        background: linear-gradient(90deg, #10b981, #22c55e);
+      }
+
+      .results-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 2fr);
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .result-panel {
+        border: 1px solid #d1d5db;
+        border-radius: 0.75rem;
+        background: #ffffff;
+        padding: 1.4rem 1.6rem;
+        min-height: 220px;
+      }
+
+      .result-panel h3 {
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      #mh-impact-panel {
+        transition:
+          transform 0.18s ease,
+          box-shadow 0.18s ease,
+          border-color 0.18s ease,
+          background-color 0.18s ease;
+      }
+
+      #mh-impact-panel:hover {
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 18px 45px rgba(148, 163, 184, 0.45);
+        border-color: #c4b5fd;
+        background-color: #f9fafb;
+      }
+
+      .result-placeholder {
+        font-size: 0.9rem;
+        color: #4b5563;
+      }
+
+      .mh-extra {
+        font-size: 0.9rem;
+        color: #4b5563;
+        margin-top: 0.7rem;
+      }
+
+      .mh-disclaimer {
+        font-size: 0.78rem;
+        color: #9ca3af;
+        margin-top: 0.6rem;
+      }
+
+      .mh-impact-note {
+        font-size: 0.82rem;
+        color: #6b7280;
+        margin-bottom: 0.9rem;
+      }
+
+      .mh-impact-bars {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .mh-impact-row {
+        display: grid;
+        grid-template-columns: 110px minmax(0, 1fr) 32px;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        padding: 0.1rem 0.3rem;
+        border-radius: 0.6rem;
+        transition:
+          transform 0.15s ease,
+          background-color 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      .mh-impact-row:hover {
+        transform: scale(1.02);
+        background-color: #f9fafb;
+        box-shadow: 0 6px 16px rgba(148, 163, 184, 0.35);
+      }
+
+      .mh-impact-label {
+        font-weight: 500;
+        color: #374151;
+      }
+
+      .mh-impact-bar-bg {
+        position: relative;
+        height: 0.6rem;
+        border-radius: 999px;
+        background: #e5e7eb;
+        overflow: hidden;
+        transition: height 0.15s ease;
+      }
+
+      .mh-impact-row:hover .mh-impact-bar-bg {
+        height: 0.8rem;
+      }
+
+      .mh-impact-bar-fill {
+        position: absolute;
+        inset: 0;
+        border-radius: 999px;
+        width: 0%;
+        transition: width 0.4s ease;
+      }
+
+      .mh-impact-bar-fill.score-1 {
+        background: #22c55e;
+      }
+
+      .mh-impact-bar-fill.score-2 {
+        background: linear-gradient(90deg, #22c55e, #eab308);
+      }
+
+      .mh-impact-bar-fill.score-3 {
+        background: #eab308;
+      }
+
+      .mh-impact-bar-fill.score-4 {
+        background: linear-gradient(90deg, #eab308, #ef4444);
+      }
+
+      .mh-impact-bar-fill.score-5 {
+        background: #ef4444;
+      }
+
+      .mh-impact-score {
+        font-weight: 600;
+        color: #111827;
+        text-align: right;
+      }
+
+      /* Result risk colouring for mental health */
+      #mh-result-panel {
+        font-size: 1rem;
+      }
+
+      #mh-result {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        font-weight: 500;
+      }
+
+      #mh-result-panel.risk-low {
+        background: #ecfdf5;
+        border-color: #16a34a;
+        color: #14532d;
+      }
+
+      #mh-result-panel.risk-low #mh-result {
+        color: #14532d;
+      }
+
+      #mh-result-panel.risk-moderate {
+        background: #fefce8;
+        border-color: #eab308;
+        color: #78350f;
+      }
+
+      #mh-result-panel.risk-moderate #mh-result {
+        color: #78350f;
+      }
+
+      #mh-result-panel.risk-high {
+        background: #fef2f2;
+        border-color: #ef4444;
+        color: #7f1d1d;
+      }
+
+      #mh-result-panel.risk-high #mh-result {
+        color: #7f1d1d;
+      }
+
+      /* Feature impact card risk colouring (aligned with result card) */
+      #mh-impact-panel.risk-low {
+        background: #ecfdf5;
+        border-color: #16a34a;
+      }
+
+      #mh-impact-panel.risk-moderate {
+        background: #fefce8;
+        border-color: #eab308;
+      }
+
+      #mh-impact-panel.risk-high {
+        background: #fef2f2;
+        border-color: #ef4444;
+      }
+
+      .mh-input-lead {
+        margin-top: 1.75rem;
+        margin-bottom: 0.6rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: center;
+      }
+
+      .mh-input-lead h2 {
+        margin: 0 0 0.35rem;
+        font-size: 1.25rem;
+        font-weight: 650;
+        color: #0f172a;
+      }
+
+      .mh-input-lead p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #4b5563;
+      }
+
+      @media (max-width: 768px) {
+        .analysis-layout {
+          padding-inline: 1.25rem;
+        }
+
+        .results-grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="nav">
+      <div class="nav-inner">
+        <div class="logo">Carelytics</div>
+        <nav class="nav-links">
+          <a href="index.html#home">Home</a>
+          <a href="index.html#about">About</a>
+          <a href="index.html#analysis">Back to Analysis</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="analysis-page">
+      <section class="analysis-layout">
+        <div class="analysis-title-block">
+          <h1>Daily mental health analysis</h1>
+          <p class="analysis-title-subtitle">
+            Understand today's mental health risk from your sleep, activity, and
+            text data.
+          </p>
+        </div>
+
+        <div class="analysis-intro-block">
+          <div class="mh-intro-card">
+            <p class="mh-intro-eyebrow">Mental health model</p>
+            <h2 class="mh-intro-title">How this model uses your data</h2>
+            <div class="mh-intro-body">
+              <p>
+                This mental health model combines several signals from the same
+                day to estimate an overall daily mental health risk level.
+              </p>
+              <ul>
+                <li>
+                  Night-time sleep patterns: time in bed, total sleep,
+                  awakenings, and WASO.
+                </li>
+                <li>
+                  Daytime activity and mobility: steps, walking, time sitting,
+                  and social contact.
+                </li>
+                <li>
+                  Short text notes or messages capturing how you felt during the
+                  day.
+                </li>
+              </ul>
+              <p class="mh-intro-note">
+                Designed for learning and exploration &mdash; not for diagnosis
+                or medical decision making.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mh-input-lead">
+          <h2>Provide today's data</h2>
+          <p>Fill in the fields below using information from the same day.</p>
+        </div>
+
+        <div class="input-sections">
+          <div class="input-section-card">
+            <div class="input-section-header">
+              <div class="input-section-title">Sleep</div>
+              <div class="input-section-subtitle">
+                Night-time duration and continuity.
+              </div>
+            </div>
+            <div class="inputs-grid">
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">Time in bed</div>
+                  <small>Hours in bed</small>
+                </div>
+                <input
+                  id="mh-time-in-bed"
+                  type="number"
+                  min="3"
+                  max="12"
+                  step="0.5"
+                  value="8"
+                />
+              </div>
+
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">Total sleep</div>
+                  <small>Hours actually asleep</small>
+                </div>
+                <input
+                  id="mh-total-sleep"
+                  type="number"
+                  min="2"
+                  max="12"
+                  step="0.5"
+                  value="6.5"
+                />
+              </div>
+
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">WASO</div>
+                  <small>Awake after sleep onset (min)</small>
+                </div>
+                <input
+                  id="mh-waso"
+                  type="number"
+                  min="0"
+                  max="240"
+                  step="5"
+                  value="45"
+                />
+              </div>
+
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">Awakenings</div>
+                  <small>Number of awakenings</small>
+                </div>
+                <input
+                  id="mh-awakenings"
+                  type="number"
+                  min="0"
+                  max="20"
+                  step="1"
+                  value="3"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="input-section-card">
+            <div class="input-section-header">
+              <div class="input-section-title">Activity &amp; Mobility</div>
+              <div class="input-section-subtitle">
+                Daily movement, time sitting, and social contact.
+              </div>
+            </div>
+            <div class="inputs-grid">
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">Steps</div>
+                  <small>Approximate steps today</small>
+                </div>
+                <input
+                  id="mh-steps"
+                  type="number"
+                  min="0"
+                  max="30000"
+                  step="100"
+                  value="5000"
+                />
+              </div>
+
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">Walking minutes</div>
+                  <small>Minutes of walking</small>
+                </div>
+                <input
+                  id="mh-walking"
+                  type="number"
+                  min="0"
+                  max="300"
+                  step="5"
+                  value="30"
+                />
+              </div>
+
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">Sitting hours</div>
+                  <small>Hours spent sitting</small>
+                </div>
+                <input
+                  id="mh-sitting"
+                  type="number"
+                  min="0"
+                  max="24"
+                  step="0.5"
+                  value="10"
+                />
+              </div>
+
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">Went outside home</div>
+                  <small>Did you leave home today?</small>
+                </div>
+                <select id="mh-outside">
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">Outings</div>
+                  <small>Number of outings</small>
+                </div>
+                <input
+                  id="mh-outings"
+                  type="number"
+                  min="0"
+                  max="20"
+                  step="1"
+                  value="1"
+                />
+              </div>
+
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">Visited by someone</div>
+                  <small>Any visitors today?</small>
+                </div>
+                <select id="mh-visited">
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">Felt unsteady</div>
+                  <small>Unsteady while walking?</small>
+                </div>
+                <select id="mh-unsteady">
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
+
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">Fall or near-fall</div>
+                  <small>Any fall today?</small>
+                </div>
+                <select id="mh-fall">
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
+                </select>
+              </div>
+
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">Support while walking</div>
+                  <small>Walking aid used</small>
+                </div>
+                <select id="mh-support">
+                  <option value="none">None</option>
+                  <option value="stick">Stick</option>
+                  <option value="walker">Walker</option>
+                </select>
+              </div>
+
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">Energy</div>
+                  <small>Self-rated (1-5)</small>
+                </div>
+                <input
+                  id="mh-energy"
+                  type="number"
+                  min="1"
+                  max="5"
+                  step="1"
+                  value="3"
+                />
+              </div>
+
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">Pain while walking</div>
+                  <small>Scale 1-10</small>
+                </div>
+                <input
+                  id="mh-pain"
+                  type="number"
+                  min="1"
+                  max="10"
+                  step="1"
+                  value="3"
+                />
+              </div>
+
+              <div class="input-card">
+                <div>
+                  <div class="input-card-title">Shortness of breath</div>
+                  <small>Choose level</small>
+                </div>
+                <select id="mh-sob">
+                  <option value="none">None</option>
+                  <option value="mild">Mild</option>
+                  <option value="moderate">Moderate</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-section-card">
+            <div class="input-section-header">
+              <div class="input-section-title">Text &amp; Notes</div>
+              <div class="input-section-subtitle">
+                Short messages capturing how the day felt.
+              </div>
+            </div>
+            <div class="inputs-grid">
+              <div class="input-card" style="grid-column: 1 / -1">
+                <div>
+                  <div class="input-card-title">Today's messages / notes</div>
+                  <small>One line per message or note</small>
+                </div>
+                <textarea
+                  id="mh-messages"
+                  rows="4"
+                  style="
+                    margin-top: 0.65rem;
+                    width: 100%;
+                    padding: 0.5rem 0.6rem;
+                    border-radius: 0.5rem;
+                    border: 1px solid #d1d5db;
+                    font-size: 0.85rem;
+                    user-select: text;
+                  "
+                  autocomplete="on"
+                  autocorrect="on"
+                  spellcheck="true"
+                >
+Feeling a bit stressed about work but generally okay today.
+Had a short walk outside and it helped my mood.</textarea
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="analysis-result-heading" id="mh-run">
+          <h2>Analysis Result</h2>
+          <span
+            id="mh-status"
+            style="margin-left: 0.75rem; font-size: 0.85rem; display: block"
+          ></span>
+        </div>
+
+        <div class="results-grid">
+          <div class="result-panel" id="mh-result-panel">
+            <h3>Result</h3>
+            <p id="mh-result" class="result-placeholder">
+              Fill in the data and click "Analysis Result" above to see the
+              fused daily mental health risk.
+            </p>
+            <p id="mh-extra" class="mh-extra"></p>
+            <p class="mh-disclaimer">
+              This is an educational tool, not a diagnostic test or medical
+              advice.
+            </p>
+            <button
+              id="mh-use-overall"
+              type="button"
+              style="
+                margin-top: 0.9rem;
+                padding: 0.5rem 1rem;
+                border-radius: 999px;
+                border: none;
+                background: linear-gradient(90deg, #0f766e, #14b8a6);
+                color: #ecfeff;
+                font-size: 0.8rem;
+                font-weight: 600;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                cursor: pointer;
+              "
+            >
+              Use in overall risk
+            </button>
+          </div>
+
+          <div class="result-panel" id="mh-impact-panel">
+            <h3>Feature Impact</h3>
+            <p class="mh-impact-note">
+              Relative impact of each component on today's fused mental health
+              risk (scale 1–5).
+            </p>
+            <div id="mh-impact-bars" class="mh-impact-bars">
+              <div class="mh-impact-row">
+                <span class="mh-impact-label">Sleep</span>
+                <div class="mh-impact-bar-bg">
+                  <div class="mh-impact-bar-fill" data-feature="sleep"></div>
+                </div>
+                <span class="mh-impact-score" data-score="sleep">–</span>
+              </div>
+              <div class="mh-impact-row">
+                <span class="mh-impact-label">Activity</span>
+                <div class="mh-impact-bar-bg">
+                  <div class="mh-impact-bar-fill" data-feature="activity"></div>
+                </div>
+                <span class="mh-impact-score" data-score="activity">–</span>
+              </div>
+              <div class="mh-impact-row">
+                <span class="mh-impact-label">Text</span>
+                <div class="mh-impact-bar-bg">
+                  <div class="mh-impact-bar-fill" data-feature="text"></div>
+                </div>
+                <span class="mh-impact-score" data-score="text">–</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script>
+      function boolFromSelect(selectId) {
+        return (document.getElementById(selectId).value || "No") === "Yes";
+      }
+
+      function getQueryParam(name) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+      }
+
+      const mhReturnToOverall = getQueryParam("return") === "overall";
+      let lastMentalResult = null;
+
+      function mhInterpretation(level) {
+        const l = String(level || "").toUpperCase();
+        if (l === "LOW") {
+          return "Model sees low daily mental health risk today based on the data you entered.";
+        }
+        if (l === "MEDIUM") {
+          return "Model sees a moderate daily mental health risk today; consider paying attention to how your sleep, activity, and mood change over the next few days.";
+        }
+        if (l === "HIGH") {
+          return "Model sees a higher daily mental health risk today; consider reaching out to trusted people or a mental health professional if you have concerns.";
+        }
+        return "Model could not clearly classify today's risk level.";
+      }
+
+      function riskLevelToScore(level) {
+        const l = String(level || "").toUpperCase();
+        if (l === "HIGH") return 5;
+        if (l === "MEDIUM" || l === "MODERATE") return 3;
+        if (l === "LOW") return 1;
+        return 0;
+      }
+
+      function updateImpactBars(details) {
+        if (!details) return;
+
+        const sleepLevel = details.sleep_risk_level;
+        const activityLevel = details.activity_risk_level;
+        const textLevel = details.text_risk_level;
+
+        const sleepScore = riskLevelToScore(sleepLevel);
+        let activityScore = riskLevelToScore(activityLevel);
+        const textScore = riskLevelToScore(textLevel);
+
+        // For activity, prefer the underlying numeric risk score when
+        // available so that very poor activity patterns surface more
+        // clearly in the impact bar, even if the discrete level stays LOW.
+        const rawActivityNumeric = details.activity_risk_score;
+        const parsedActivityNumeric =
+          typeof rawActivityNumeric === "number"
+            ? rawActivityNumeric
+            : rawActivityNumeric != null
+              ? Number(rawActivityNumeric)
+              : NaN;
+
+        if (
+          !Number.isNaN(parsedActivityNumeric) &&
+          parsedActivityNumeric >= 0
+        ) {
+          // Map 0–1 risk score into 1–5 impact scale, aligned with
+          // backend thresholds: LOW < 0.4, MODERATE 0.4–0.7, HIGH >= 0.7
+          if (parsedActivityNumeric < 0.4) {
+            activityScore = 1; // LOW  → 1
+          } else if (parsedActivityNumeric < 0.55) {
+            activityScore = 2; // lower MODERATE → 2
+          } else if (parsedActivityNumeric < 0.7) {
+            activityScore = 3; // upper MODERATE → 3
+          } else if (parsedActivityNumeric < 0.85) {
+            activityScore = 4; // lower HIGH → 4
+          } else {
+            activityScore = 5; // upper HIGH → 5
+          }
+        }
+
+        const features = [
+          { key: "sleep", score: sleepScore },
+          { key: "activity", score: activityScore },
+          { key: "text", score: textScore },
+        ];
+
+        features.forEach(({ key, score }) => {
+          const bar = document.querySelector(
+            `.mh-impact-bar-fill[data-feature="${key}"]`,
+          );
+          const scoreLabel = document.querySelector(
+            `.mh-impact-score[data-score="${key}"]`,
+          );
+
+          if (!bar || !scoreLabel) return;
+
+          bar.classList.remove(
+            "score-1",
+            "score-2",
+            "score-3",
+            "score-4",
+            "score-5",
+          );
+
+          if (!score) {
+            bar.style.width = "0%";
+            scoreLabel.textContent = "–";
+            return;
+          }
+
+          const widthPct = (score / 5) * 100;
+          bar.style.width = `${widthPct}%`;
+          scoreLabel.textContent = `${score}/5`;
+
+          // Absolute coloring by score:
+          // 1 → green, 2 → green-yellow, 3 → yellow,
+          // 4 → yellow-red, 5 → red
+          const rounded = Math.min(5, Math.max(1, Math.round(score)));
+          bar.classList.add(`score-${rounded}`);
+        });
+      }
+
+      async function runMentalAnalysis() {
+        const statusEl = document.getElementById("mh-status");
+        const resultEl = document.getElementById("mh-result");
+        const extraEl = document.getElementById("mh-extra");
+        const panelEl = document.getElementById("mh-result-panel");
+        const impactPanelEl = document.getElementById("mh-impact-panel");
+
+        statusEl.textContent = "Running analysis...";
+        if (panelEl) {
+          panelEl.classList.remove("risk-low", "risk-moderate", "risk-high");
+        }
+        if (impactPanelEl) {
+          impactPanelEl.classList.remove(
+            "risk-low",
+            "risk-moderate",
+            "risk-high",
+          );
+        }
+
+        const sleep_record = {
+          time_in_bed_minutes: Number(
+            (document.getElementById("mh-time-in-bed").value || 0) * 60,
+          ),
+          total_sleep_minutes: Number(
+            (document.getElementById("mh-total-sleep").value || 0) * 60,
+          ),
+          waso_minutes: Number(document.getElementById("mh-waso").value || 0),
+          num_awakenings: Number(
+            document.getElementById("mh-awakenings").value || 0,
+          ),
+        };
+
+        const activity_record = {
+          approx_steps: Number(document.getElementById("mh-steps").value || 0),
+          walking_minutes: Number(
+            document.getElementById("mh-walking").value || 0,
+          ),
+          sitting_hours: Number(
+            document.getElementById("mh-sitting").value || 0,
+          ),
+          went_outside_home: boolFromSelect("mh-outside"),
+          num_outings: Number(document.getElementById("mh-outings").value || 0),
+          visited_by_someone: boolFromSelect("mh-visited"),
+          felt_unsteady_while_walking: boolFromSelect("mh-unsteady"),
+          any_fall_or_near_fall: boolFromSelect("mh-fall"),
+          needed_support_while_walking:
+            document.getElementById("mh-support").value,
+          self_rated_energy: Number(
+            document.getElementById("mh-energy").value || 0,
+          ),
+          pain_while_walking: Number(
+            document.getElementById("mh-pain").value || 0,
+          ),
+          shortness_of_breath: document.getElementById("mh-sob").value,
+        };
+
+        const rawText = document.getElementById("mh-messages").value || "";
+        const messages = rawText
+          .split("\n")
+          .map((m) => m.trim())
+          .filter((m) => m.length > 0);
+
+        const payload = {
+          sleep_record,
+          activity_record,
+          messages,
+        };
+
+        try {
+          const resp = await fetch("/api/mental", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          const data = await resp.json();
+          if (!resp.ok) {
+            statusEl.textContent = "Error";
+            resultEl.textContent = data.error || "Request failed";
+            if (extraEl) extraEl.textContent = "";
+            return;
+          }
+
+          statusEl.textContent = "";
+          const probPct = (data.probability * 100).toFixed(2);
+          const level = String(data.risk_level || "");
+          resultEl.innerHTML = `Estimated daily mental health risk probability: <strong>${probPct}%</strong><br />Risk level today: <strong>${level}</strong> (LOW / MEDIUM / HIGH).`;
+
+          if (extraEl) {
+            const interp = mhInterpretation(level);
+            extraEl.textContent = `${interp} See the Feature Impact panel on the right to understand how sleep, activity, and text contributed today.`;
+          }
+
+          lastMentalResult = data;
+
+          updateImpactBars(data.details || data);
+
+          if (panelEl || impactPanelEl) {
+            const levelUpper = String(data.risk_level || "").toUpperCase();
+            let cls = "risk-low";
+            if (levelUpper === "HIGH") cls = "risk-high";
+            else if (levelUpper === "MEDIUM") cls = "risk-moderate";
+
+            if (panelEl) {
+              panelEl.classList.remove(
+                "risk-low",
+                "risk-moderate",
+                "risk-high",
+              );
+              panelEl.classList.add(cls);
+            }
+            if (impactPanelEl) {
+              impactPanelEl.classList.remove(
+                "risk-low",
+                "risk-moderate",
+                "risk-high",
+              );
+              impactPanelEl.classList.add(cls);
+            }
+          }
+        } catch (err) {
+          console.error(err);
+          statusEl.textContent = "Error";
+          resultEl.textContent = "Could not contact the analysis server.";
+        }
+      }
+
+      function initMentalOverallIntegration() {
+        const btn = document.getElementById("mh-use-overall");
+        if (!btn) return;
+
+        if (!mhReturnToOverall) {
+          btn.style.display = "none";
+          return;
+        }
+
+        btn.addEventListener("click", () => {
+          if (!lastMentalResult) {
+            alert("Please run the mental health analysis first.");
+            return;
+          }
+          localStorage.setItem(
+            "overall_mh_result",
+            JSON.stringify(lastMentalResult),
+          );
+          window.location.href = "overall.html";
+        });
+      }
+
+      document
+        .getElementById("mh-run")
+        .addEventListener("click", runMentalAnalysis);
+
+      window.addEventListener("DOMContentLoaded", initMentalOverallIntegration);
+    </script>
+  </body>
+</html>
