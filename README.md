@@ -38,9 +38,8 @@ This project combines three separate machine‑learning models (blood pressure, 
   </tr>
 </table>
 
-hjgjgjhgjh
 
-table>
+<table>
   <tr>
     <td width="50%">
       <img width="100%" alt="image" rc="https://github.com/user-attachments/assets/5610552e-c957-4da9-ac3c-7a840e408647" />
