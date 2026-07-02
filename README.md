@@ -64,5 +64,3 @@ deactivate
 (Or `conda deactivate` if you are in a conda environment.)
 
 ---
-
-You can extend this README later with details about the datasets, model training process, and any evaluation metrics you used.
